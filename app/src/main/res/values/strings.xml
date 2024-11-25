@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">AnimeList</string>
+    <string name="top_nav_dash_board">Home</string>
+    <string name="top_nav_saved">Saved</string>
+    <string name="top_nav_interests">Interests</string>
 </resources>
