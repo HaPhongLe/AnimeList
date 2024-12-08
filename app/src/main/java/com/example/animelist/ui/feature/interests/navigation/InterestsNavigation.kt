@@ -9,10 +9,10 @@ import com.example.animelist.ui.feature.interests.InterestsScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-object InterestsScreen: Route.Screen
+object InterestsScreen : Route.Screen
 
 fun NavHostController.navigateToInterests(navOptions: NavOptions) = navigate(route = InterestsScreen, navOptions = navOptions)
 
-fun NavGraphBuilder.favouriteScreen(){
+fun NavGraphBuilder.favouriteScreen() {
     composable<InterestsScreen> { InterestsScreen() }
 }

@@ -3,11 +3,21 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.apollo)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ktlint)
+    kotlin("kapt")
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.example")
+    }
 }
 
 android {
     namespace = "com.example.animelist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.animelist"
@@ -52,6 +62,13 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.apollo)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

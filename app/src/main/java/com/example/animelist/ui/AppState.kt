@@ -14,7 +14,6 @@ import com.example.animelist.ui.feature.dashboard.navigation.navigateToDashboard
 import com.example.animelist.ui.feature.interests.navigation.navigateToInterests
 import com.example.animelist.ui.feature.watchlater.navigation.navigateToWatchLater
 
-
 @Composable
 fun rememberAppState(
     navController: NavHostController = rememberNavController()
@@ -33,9 +32,9 @@ class AppState(
             currentDestination?.hasRoute(route = topLevelNavDestination.route) == true
         }
 
-    fun navigateToTopLevelNavDestination(topLevelNavDestination: TopLevelNavDestination){
+    fun navigateToTopLevelNavDestination(topLevelNavDestination: TopLevelNavDestination) {
         val topLevelNavOptions = navOptions {
-            popUpTo(navController.graph.findStartDestination().id){
+            popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
 
@@ -44,7 +43,7 @@ class AppState(
             restoreState = true
         }
 
-        when(topLevelNavDestination){
+        when (topLevelNavDestination) {
             TopLevelNavDestination.DASH_BOARD -> navController.navigateToDashboard(topLevelNavOptions)
             TopLevelNavDestination.WATCH_LATER -> navController.navigateToWatchLater(topLevelNavOptions)
             TopLevelNavDestination.INTERESTS -> navController.navigateToInterests(topLevelNavOptions)

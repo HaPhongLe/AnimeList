@@ -1,6 +1,5 @@
 package com.example.animelist.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -23,12 +22,13 @@ private val LightColorScheme = lightColorScheme(
     tertiary = tertiaryLightHighContrast,
 
     background = backgroundLightHighContrast,
-    surface = surfaceContainerLightHighContrast ,
+    surface = surfaceContainerLightHighContrast,
     onPrimary = onPrimaryLightHighContrast,
     onSecondary = onSecondaryLightHighContrast,
     onTertiary = onTertiaryLightHighContrast,
     onBackground = onBackgroundLightHighContrast,
     onSurface = onSurfaceLightHighContrast,
+    surfaceContainer = surfaceVariantDarkMediumContrast
 )
 
 @Composable

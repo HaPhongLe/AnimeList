@@ -13,21 +13,20 @@ import com.example.animelist.navigation.TopLevelNavDestination
 import com.example.animelist.ui.AppState
 import kotlin.reflect.KClass
 
-
 @Composable
 fun BottomNavBar(
     appState: AppState,
     modifier: Modifier = Modifier
 ) {
-    NavigationBar(modifier = modifier){
+    NavigationBar(modifier = modifier) {
         TopLevelNavDestination.entries.forEach { topLeveDestination ->
             NavigationBarItem(
                 selected = appState.currentDestination.isRouteInHierarchy(topLeveDestination.baseRoute),
-                icon = { Icon(painter = painterResource(topLeveDestination.icon), contentDescription = null)},
-                onClick = {appState.navigateToTopLevelNavDestination(topLeveDestination)}
+                icon = { Icon(painter = painterResource(topLeveDestination.icon), contentDescription = null) },
+                onClick = { appState.navigateToTopLevelNavDestination(topLeveDestination) }
             )
         }
     }
 }
 
-fun NavDestination?.isRouteInHierarchy(route: KClass<*>): Boolean = this?.hierarchy?.any{ it.hasRoute(route) } ?: false
+fun NavDestination?.isRouteInHierarchy(route: KClass<*>): Boolean = this?.hierarchy?.any { it.hasRoute(route) } ?: false

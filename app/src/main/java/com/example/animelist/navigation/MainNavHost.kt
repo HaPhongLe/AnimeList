@@ -9,7 +9,6 @@ import com.example.animelist.ui.feature.dashboard.navigation.dashboardScreen
 import com.example.animelist.ui.feature.interests.navigation.favouriteScreen
 import com.example.animelist.ui.feature.watchlater.navigation.watchLaterScreen
 
-
 @Composable
 fun MainNavHost(
     appState: AppState,
@@ -20,7 +19,7 @@ fun MainNavHost(
         navController = navHostController,
         startDestination = DashboardScreen,
         modifier = modifier
-    ){
+    ) {
         dashboardScreen()
         watchLaterScreen()
         favouriteScreen()

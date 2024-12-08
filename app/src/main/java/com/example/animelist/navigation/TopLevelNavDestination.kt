@@ -17,7 +17,7 @@ enum class TopLevelNavDestination(
     DASH_BOARD(
         icon = R.drawable.ic_home,
         title = R.string.top_nav_dash_board,
-        route = DashboardScreen::class,
+        route = DashboardScreen::class
     ),
     WATCH_LATER(
         icon = R.drawable.ic_bookmark,

@@ -9,10 +9,10 @@ import com.example.animelist.ui.feature.watchlater.WatchLaterScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-object WatchLaterScreen: Route.Screen
+object WatchLaterScreen : Route.Screen
 
 fun NavHostController.navigateToWatchLater(navOptions: NavOptions) = navigate(route = WatchLaterScreen, navOptions = navOptions)
 
-fun NavGraphBuilder.watchLaterScreen(){
+fun NavGraphBuilder.watchLaterScreen() {
     composable<WatchLaterScreen> { WatchLaterScreen() }
 }
