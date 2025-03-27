@@ -1,19 +1,18 @@
-package com.example.animelist.data
+package com.example.animelist.data.api
 
 import com.apollographql.apollo3.ApolloClient
 import com.example.TrendingAnimeQuery
 import com.example.animelist.data.mapper.toAnime
-import com.example.animelist.domain.AnimeClient
 import com.example.animelist.domain.model.Anime
 import com.example.type.MediaSort
 import com.example.type.MediaType
 
-class ApolloAnimeClient(
+class ApolloAnimeApi(
     private val apolloClient: ApolloClient
-) : AnimeClient {
-    override suspend fun getTopTrendingAnime(): List<Anime> {
+) : AnimeApi {
+    override suspend fun getTopTrendingAnime(page: Int, perPage: Int): List<Anime> {
         return apolloClient
-            .query(query = TrendingAnimeQuery(page = 1, perPage = 10, sort = listOf(MediaSort.TRENDING_DESC), type = MediaType.ANIME))
+            .query(query = TrendingAnimeQuery(page = page, perPage = perPage, sort = listOf(MediaSort.TRENDING_DESC), type = MediaType.ANIME))
             .execute()
             .data
             ?.Page

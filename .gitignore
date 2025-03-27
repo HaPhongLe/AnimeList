@@ -8,6 +8,7 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 /.idea/kotlinc.xml
+/.idea/*/Project_Default.xml
 .DS_Store
 /build
 /captures

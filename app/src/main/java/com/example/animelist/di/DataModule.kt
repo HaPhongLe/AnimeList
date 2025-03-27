@@ -1,8 +1,8 @@
 package com.example.animelist.di
 
 import com.apollographql.apollo3.ApolloClient
-import com.example.animelist.data.ApolloAnimeClient
-import com.example.animelist.domain.AnimeClient
+import com.example.animelist.data.api.AnimeApi
+import com.example.animelist.data.api.ApolloAnimeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object DataModule {
 
     @Provides
     @Singleton
@@ -22,5 +22,5 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAnimeClient(apolloClient: ApolloClient): AnimeClient = ApolloAnimeClient(apolloClient)
+    fun provideAnimeClient(apolloClient: ApolloClient): AnimeApi = ApolloAnimeApi(apolloClient)
 }

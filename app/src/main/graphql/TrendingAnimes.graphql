@@ -30,6 +30,15 @@ query TrendingAnime($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: Med
                     name
                 }
             }
+            id
+            meanScore
+            nextAiringEpisode {
+                airingAt
+                episode
+                timeUntilAiring
+                id
+            }
+            genres
         }
     }
 }

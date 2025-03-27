@@ -1,6 +1,7 @@
 package com.example.animelist.domain.model
 
 data class Anime(
+    val id: Int,
     val averageScore: Int?,
     val episodes: Int?,
     val ranking: List<Ranking>?,
@@ -8,7 +9,10 @@ data class Anime(
     val title: Title?,
     val airingSchedule: AiringSchedule?,
     val coverImage: CoverImage?,
-    val studios: List<String>
+    val studios: List<String>,
+    val meanScore: Int?,
+    val genres: List<String>,
+    val nexEpisodeAiring: AiringScheduleNode?
 ) {
     companion object Companion
 }

@@ -8,6 +8,7 @@ import com.example.animelist.domain.model.Ranking
 import com.example.animelist.domain.model.Title
 
 fun Anime.Companion.mock(
+    id: Int = 1,
     averageScore: Int? = 85,
     episodes: Int? = 12,
     ranking: List<Ranking>? = listOf(Ranking.mock()),
@@ -15,8 +16,12 @@ fun Anime.Companion.mock(
     title: Title? = Title.mock(),
     airingSchedule: AiringSchedule? = AiringSchedule.mock(),
     coverImage: CoverImage? = CoverImage.mock(),
-    studios: List<String> = listOf("8-bit")
+    studios: List<String> = listOf("8-bit"),
+    meanScore: Int? = 98,
+    genres: List<String> = listOf("Action"),
+    nextAiringEpisode: AiringScheduleNode = AiringScheduleNode.mock()
 ) = Anime(
+    id = id,
     averageScore = averageScore,
     episodes = episodes,
     ranking = ranking,
@@ -24,7 +29,10 @@ fun Anime.Companion.mock(
     title = title,
     airingSchedule = airingSchedule,
     coverImage = coverImage,
-    studios = studios
+    studios = studios,
+    meanScore = meanScore,
+    genres = genres,
+    nexEpisodeAiring = nextAiringEpisode
 )
 
 fun Ranking.Companion.mock(

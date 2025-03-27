@@ -10,6 +10,7 @@ import com.example.animelist.domain.model.Title
 
 fun TrendingAnimeQuery.Medium.toAnime(): Anime {
     return Anime(
+        id = id,
         averageScore = averageScore,
         episodes = episodes,
         ranking = rankings?.filterNotNull()?.map { it.toRanking() },
@@ -17,7 +18,10 @@ fun TrendingAnimeQuery.Medium.toAnime(): Anime {
         title = title?.toTitle(),
         airingSchedule = airingSchedule?.toAiringSchedule(),
         coverImage = coverImage?.toCoverImage(),
-        studios = studios?.toStudios() ?: emptyList()
+        studios = studios?.toStudios() ?: emptyList(),
+        meanScore = meanScore,
+        genres = genres?.filterNotNull() ?: emptyList<String>(),
+        nexEpisodeAiring = nextAiringEpisode?.toAiringSchedule()
     )
 }
 
@@ -36,6 +40,13 @@ fun TrendingAnimeQuery.AiringSchedule.toAiringSchedule() = AiringSchedule(
 )
 
 fun TrendingAnimeQuery.Node.toAiringScheduleNode() = AiringScheduleNode(
+    airingAt = airingAt,
+    episodes = episode,
+    id = id,
+    timeUtilAiring = timeUntilAiring
+)
+
+fun TrendingAnimeQuery.NextAiringEpisode.toAiringSchedule() = AiringScheduleNode(
     airingAt = airingAt,
     episodes = episode,
     id = id,

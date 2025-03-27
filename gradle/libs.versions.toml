@@ -15,6 +15,7 @@ apollo = "3.7.3"
 hilt = "2.52"
 hilt-compose = "1.2.0"
 ktlint = "11.5.1"
+paging_version = "3.3.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -27,6 +28,8 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation"}
+androidx-paging-runtime ={group = "androidx.paging", name = "paging-runtime", version.ref = "paging_version"}
+androidx-paging-compose ={group = "androidx.paging", name = "paging-compose", version.ref = "paging_version"}
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
