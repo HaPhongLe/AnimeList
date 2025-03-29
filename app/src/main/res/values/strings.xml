@@ -3,4 +3,7 @@
     <string name="top_nav_dash_board">Home</string>
     <string name="top_nav_saved">Saved</string>
     <string name="top_nav_interests">Interests</string>
+
+    //error message
+    <string name="error_refreshing">Error Refreshing!</string>
 </resources>

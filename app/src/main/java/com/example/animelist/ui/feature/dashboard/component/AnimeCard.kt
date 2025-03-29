@@ -30,6 +30,7 @@ import com.example.animelist.ui.util.hexToComposeColor
 @Composable
 fun AnimeCard(
     anime: Anime,
+    ranking: Int,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -37,12 +38,10 @@ fun AnimeCard(
             .fillMaxWidth()
             .height(250.dp)
     ) {
-        anime.ranking?.getOrNull(0)?.let {
-            AnimeAvatar(
-                ranking = it.rank,
-                imageUrl = anime.coverImage?.large
-            )
-        }
+        AnimeAvatar(
+            ranking = ranking,
+            imageUrl = anime.coverImage?.large
+        )
 
         Column(
             modifier = Modifier
@@ -110,6 +109,7 @@ private fun AnimeAvatar(
 @Composable
 private fun Preview_AnimeCard() {
     AnimeCard(
-        anime = Anime.mock()
+        anime = Anime.mock(),
+        ranking = 1
     )
 }
