@@ -1,9 +1,13 @@
 package com.example.animelist.ui.feature.dashboard
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
@@ -21,11 +25,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.animelist.R
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.ui.component.ErrorDialog
 import com.example.animelist.ui.component.FullScreenLoading
@@ -79,17 +88,31 @@ private fun DashboardScreen(
     lazyPagingItems: LazyPagingItems<Anime>,
     onRefresh: () -> Unit
 ) {
-    if (viewState.isLoading) {
-        FullScreenLoading()
-    } else {
-        PullToRefreshAnimeList(
-            isRefreshing = viewState.isRefreshing,
-            isAppending = viewState.isAppendingLoading,
-            appendingError = viewState.appendError,
-            onRefresh = onRefresh,
-            lazyPagingItems = lazyPagingItems,
-            modifier = modifier
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            text = stringResource(R.string.trending_title).uppercase(),
+            textAlign = TextAlign.Center,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
         )
+        if (viewState.isLoading) {
+            FullScreenLoading()
+        } else {
+            PullToRefreshAnimeList(
+                isRefreshing = viewState.isRefreshing,
+                isAppending = viewState.isAppendingLoading,
+                appendingError = viewState.appendError,
+                onRefresh = onRefresh,
+                lazyPagingItems = lazyPagingItems
+            )
+        }
     }
 }
 
@@ -122,6 +145,9 @@ private fun PullToRefreshAnimeList(
         LazyColumn(modifier = Modifier.padding(16.dp)) {
             lazyPagingItems.apply {
                 items(itemCount) { index ->
+                    if (index != 0) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                     AnimeCard(
                         anime = get(index)!!,
                         ranking = index + 1

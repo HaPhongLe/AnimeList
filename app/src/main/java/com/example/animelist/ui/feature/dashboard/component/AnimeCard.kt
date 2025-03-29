@@ -1,8 +1,11 @@
 package com.example.animelist.ui.feature.dashboard.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -10,10 +13,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -27,6 +35,7 @@ import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.ui.util.hexToComposeColor
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AnimeCard(
     anime: Anime,
@@ -37,6 +46,7 @@ fun AnimeCard(
         modifier = modifier
             .fillMaxWidth()
             .height(250.dp)
+            .clip(RoundedCornerShape(5.dp))
     ) {
         AnimeAvatar(
             ranking = ranking,
@@ -54,6 +64,17 @@ fun AnimeCard(
             anime.title?.english?.let { Text(text = it, color = Color.White, fontWeight = FontWeight.Bold) }
             anime.studios.firstOrNull()?.let {
                 Text(text = it, color = color)
+            }
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                anime.genres.forEach { genre ->
+                    AssistChip(
+                        onClick = {},
+                        label = { Text(text = genre, color = Color.White) },
+                        shape = RoundedCornerShape(20.dp),
+                        colors = AssistChipDefaults.assistChipColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)),
+                        border = AssistChipDefaults.assistChipBorder(false)
+                    )
+                }
             }
         }
     }
