@@ -8,4 +8,5 @@
     <string name="error_refreshing">Error Refreshing!</string>
 
     <string name="trending_title">Trending</string>
+    <string name="average_score">Average Score: %d</string>
 </resources>

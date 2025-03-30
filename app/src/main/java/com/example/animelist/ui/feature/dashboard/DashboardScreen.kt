@@ -1,7 +1,7 @@
 package com.example.animelist.ui.feature.dashboard
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -74,6 +74,7 @@ fun DashboardScreen(
     }
 
     DashboardScreen(
+        modifier = Modifier.background(color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.05f)),
         viewState = viewState,
         lazyPagingItems = animeLazyPagingItems,
         onRefresh = { dashboardViewModel.onRefresh.invoke() }
@@ -89,8 +90,7 @@ private fun DashboardScreen(
     onRefresh: () -> Unit
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier.fillMaxSize()
     ) {
         Text(
             modifier = Modifier

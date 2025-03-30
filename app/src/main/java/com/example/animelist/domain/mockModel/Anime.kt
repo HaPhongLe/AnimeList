@@ -1,72 +1,29 @@
 package com.example.animelist.domain.mockModel
 
-import com.example.animelist.domain.model.AiringSchedule
-import com.example.animelist.domain.model.AiringScheduleNode
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.domain.model.CoverImage
-import com.example.animelist.domain.model.Ranking
 import com.example.animelist.domain.model.Title
 
 fun Anime.Companion.mock(
     id: Int = 1,
     averageScore: Int? = 85,
-    episodes: Int? = 12,
-    ranking: List<Ranking>? = listOf(Ranking.mock()),
-    trending: Int? = 100000,
     title: Title? = Title.mock(),
-    airingSchedule: AiringSchedule? = AiringSchedule.mock(),
     coverImage: CoverImage? = CoverImage.mock(),
     studios: List<String> = listOf("8-bit"),
-    meanScore: Int? = 98,
-    genres: List<String> = listOf("Action"),
-    nextAiringEpisode: AiringScheduleNode = AiringScheduleNode.mock()
+    genres: List<String> = listOf("Action")
 ) = Anime(
     id = id,
     averageScore = averageScore,
-    episodes = episodes,
-    ranking = ranking,
-    trending = trending,
     title = title,
-    airingSchedule = airingSchedule,
     coverImage = coverImage,
     studios = studios,
-    meanScore = meanScore,
-    genres = genres,
-    nexEpisodeAiring = nextAiringEpisode
-)
-
-fun Ranking.Companion.mock(
-    allTime: Boolean = false,
-    year: Int = 2024,
-    rank: Int = 1
-) = Ranking(
-    allTime = allTime,
-    year = year,
-    rank = rank
+    genres = genres
 )
 
 fun Title.Companion.mock(
     english: String = "Dandadan"
 ) = Title(
     english = english
-)
-
-fun AiringSchedule.Companion.mock(
-    nodes: List<AiringScheduleNode> = listOf(AiringScheduleNode.mock())
-) = AiringSchedule(
-    nodes = nodes
-)
-
-fun AiringScheduleNode.Companion.mock(
-    airingAt: Int = 12,
-    episodes: Int = 12,
-    id: Int = 1,
-    timeUtilAiring: Int = 1
-) = AiringScheduleNode(
-    airingAt = airingAt,
-    episodes = episodes,
-    id = id,
-    timeUtilAiring = timeUtilAiring
 )
 
 fun CoverImage.Companion.mock() = CoverImage(

@@ -26,11 +26,13 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.example.animelist.R
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.ui.util.hexToComposeColor
@@ -65,6 +67,7 @@ fun AnimeCard(
             anime.studios.firstOrNull()?.let {
                 Text(text = it, color = color)
             }
+            anime.averageScore?.let { Text(text = stringResource(R.string.average_score, it), color = Color.White, fontWeight = FontWeight.Bold) }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 anime.genres.forEach { genre ->
                     AssistChip(

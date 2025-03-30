@@ -1,24 +1,8 @@
 query TrendingAnime($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: MediaType!) {
     Page(page: $page, perPage: $perPage) {
         media(sort: $sort, type: $type) {
-            averageScore
-            episodes
-            rankings {
-                allTime
-                year
-                rank
-            }
-            trending
             title {
                 english
-            }
-            airingSchedule {
-                nodes {
-                    airingAt
-                    episode
-                    id
-                    timeUntilAiring
-                }
             }
             coverImage {
                 color
@@ -31,14 +15,8 @@ query TrendingAnime($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: Med
                 }
             }
             id
-            meanScore
-            nextAiringEpisode {
-                airingAt
-                episode
-                timeUntilAiring
-                id
-            }
             genres
+            averageScore
         }
     }
 }

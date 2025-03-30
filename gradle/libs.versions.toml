@@ -15,7 +15,11 @@ apollo = "3.7.3"
 hilt = "2.52"
 hilt-compose = "1.2.0"
 ktlint = "11.5.1"
+mockk = "1.13.2"
 paging_version = "3.3.6"
+paging_test = "3.2.1"
+coroutine-test = "1.7.3"
+turbine = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +34,7 @@ androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", versi
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation"}
 androidx-paging-runtime ={group = "androidx.paging", name = "paging-runtime", version.ref = "paging_version"}
 androidx-paging-compose ={group = "androidx.paging", name = "paging-compose", version.ref = "paging_version"}
+androidx-paging-test ={group = "androidx.paging", name = "paging-testing", version.ref = "paging_test"}
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -37,11 +42,14 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+kotlinx-coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-test"}
 kotlinx-serialization-json = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlixSerialization"}
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compose" }
 hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-compose" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk"}
+turbine = {module = "app.cash.turbine:turbine", version.ref = "turbine"}
 
 #apollo
 apollo ={group = "com.apollographql.apollo3", name = "apollo-runtime", version.ref = "apollo"}

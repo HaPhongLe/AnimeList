@@ -71,11 +71,21 @@ dependencies {
     implementation(libs.hilt.compose)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    // unit test
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutine.test)
+    testImplementation(libs.androidx.paging.test)
+    testImplementation(libs.turbine)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+tasks.withType<Test>().configureEach {
+    jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED", "-Dnet.bytebuddy.experimental=true")
 }
