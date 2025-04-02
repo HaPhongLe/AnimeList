@@ -35,6 +35,7 @@ import coil3.compose.AsyncImage
 import com.example.animelist.R
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
+import com.example.animelist.ui.theme.AppTheme
 import com.example.animelist.ui.util.hexToComposeColor
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -48,7 +49,7 @@ fun AnimeCard(
         modifier = modifier
             .fillMaxWidth()
             .height(250.dp)
-            .clip(RoundedCornerShape(5.dp))
+            .clip(RoundedCornerShape(AppTheme.dimension.spaceXS))
     ) {
         AnimeAvatar(
             ranking = ranking,
@@ -62,19 +63,19 @@ fun AnimeCard(
                 .background(color = Color.Gray.copy(alpha = 0.9f))
                 .padding(horizontal = 8.dp)
         ) {
-            val color = remember { anime.coverImage?.color?.let { hexToComposeColor(it) } ?: Color.White }
-            anime.title?.english?.let { Text(text = it, color = Color.White, fontWeight = FontWeight.Bold) }
+            val color = remember { anime.coverImage?.color?.let { hexToComposeColor(it) } }
+            anime.title?.english?.let { Text(text = it, color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
             anime.studios.firstOrNull()?.let {
-                Text(text = it, color = color)
+                Text(text = it, color = color ?: MaterialTheme.colorScheme.onPrimary)
             }
-            anime.averageScore?.let { Text(text = stringResource(R.string.average_score, it), color = Color.White, fontWeight = FontWeight.Bold) }
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            anime.averageScore?.let { Text(text = stringResource(R.string.average_score, it), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.spaceXS)) {
                 anime.genres.forEach { genre ->
                     AssistChip(
                         onClick = {},
                         label = { Text(text = genre, color = Color.White) },
-                        shape = RoundedCornerShape(20.dp),
-                        colors = AssistChipDefaults.assistChipColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)),
+                        shape = RoundedCornerShape(AppTheme.dimension.spaceL),
+                        colors = AssistChipDefaults.assistChipColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)),
                         border = AssistChipDefaults.assistChipBorder(false)
                     )
                 }
@@ -101,7 +102,7 @@ private fun AnimeAvatar(
             contentDescription = null,
             contentScale = ContentScale.FillBounds
         )
-
+        val rankingColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
         Box(
             modifier = Modifier
                 .height(60.dp)
@@ -115,13 +116,13 @@ private fun AnimeAvatar(
                         close()
                     }
 
-                    drawPath(path, color = Color.Blue.copy(alpha = 0.2f))
+                    drawPath(path, color = rankingColor)
                 }
-                .padding(4.dp)
+                .padding(AppTheme.dimension.spaceXS)
         ) {
             Text(
                 text = ranking.toString(),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )

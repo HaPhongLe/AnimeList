@@ -39,6 +39,7 @@ import com.example.animelist.domain.model.Anime
 import com.example.animelist.ui.component.ErrorDialog
 import com.example.animelist.ui.component.FullScreenLoading
 import com.example.animelist.ui.feature.dashboard.component.AnimeCard
+import com.example.animelist.ui.theme.AppTheme
 
 @Composable
 fun DashboardScreen(
@@ -95,7 +96,7 @@ private fun DashboardScreen(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(AppTheme.dimension.spaceM),
             text = stringResource(R.string.trending_title).uppercase(),
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
@@ -146,7 +147,7 @@ private fun PullToRefreshAnimeList(
             lazyPagingItems.apply {
                 items(itemCount) { index ->
                     if (index != 0) {
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(AppTheme.dimension.spaceM))
                     }
                     AnimeCard(
                         anime = get(index)!!,
@@ -156,7 +157,7 @@ private fun PullToRefreshAnimeList(
 
                 if (isAppending) {
                     item {
-                        Box(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+                        Box(modifier = Modifier.fillMaxWidth().padding(AppTheme.dimension.spaceS)) {
                             CircularProgressIndicator()
                         }
                     }

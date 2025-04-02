@@ -1,5 +1,7 @@
 package com.example.animelist.ui.theme
 
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF435E91)
@@ -217,3 +219,24 @@ val surfaceContainerLowDarkHighContrast = Color(0xFF1A1B20)
 val surfaceContainerDarkHighContrast = Color(0xFF1E2025)
 val surfaceContainerHighDarkHighContrast = Color(0xFF282A2F)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF33353A)
+
+val DarkColorScheme = darkColorScheme(
+    primary = primaryDark,
+    secondary = secondaryDark,
+    tertiary = tertiaryDark
+)
+
+val LightColorScheme = lightColorScheme(
+    primary = primaryLight,
+    secondary = secondaryLight,
+    tertiary = tertiaryLight,
+
+    background = backgroundLight,
+    surface = surfaceLight,
+    onPrimary = onPrimaryLight,
+    onSecondary = onSecondaryLight,
+    onTertiary = onTertiaryLight,
+    onBackground = onBackgroundLight,
+    onSurface = onSurfaceLight,
+    surfaceContainer = surfaceContainerLight
+)
