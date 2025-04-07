@@ -3,6 +3,7 @@ query TrendingAnime($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: Med
         media(sort: $sort, type: $type) {
             title {
                 english
+                userPreferred
             }
             coverImage {
                 color
@@ -18,5 +19,38 @@ query TrendingAnime($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: Med
             genres
             averageScore
         }
+    }
+}
+
+
+query AnimeById($mediaId: Int) {
+    Media(id: $mediaId) {
+        bannerImage
+        title {
+            english
+            userPreferred
+        }
+        genres
+        airingSchedule {
+            nodes {
+                airingAt
+                episode
+                id
+                timeUntilAiring
+            }
+        }
+        averageScore
+        description
+        endDate {
+            day
+            month
+            year
+        }
+        startDate {
+            day
+            month
+            year
+        }
+        status
     }
 }

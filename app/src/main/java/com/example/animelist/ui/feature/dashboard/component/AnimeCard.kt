@@ -1,6 +1,7 @@
 package com.example.animelist.ui.feature.dashboard.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,13 +44,15 @@ import com.example.animelist.ui.util.hexToComposeColor
 fun AnimeCard(
     anime: Anime,
     ranking: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (Int) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(250.dp)
             .clip(RoundedCornerShape(AppTheme.dimension.spaceXS))
+            .clickable { onClick(anime.id) }
     ) {
         AnimeAvatar(
             ranking = ranking,
@@ -64,7 +67,7 @@ fun AnimeCard(
                 .padding(horizontal = 8.dp)
         ) {
             val color = remember { anime.coverImage?.color?.let { hexToComposeColor(it) } }
-            anime.title?.english?.let { Text(text = it, color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
+            anime.title?.let { Text(text = it, color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
             anime.studios.firstOrNull()?.let {
                 Text(text = it, color = color ?: MaterialTheme.colorScheme.onPrimary)
             }
@@ -135,6 +138,7 @@ private fun AnimeAvatar(
 private fun Preview_AnimeCard() {
     AnimeCard(
         anime = Anime.mock(),
-        ranking = 1
+        ranking = 1,
+        onClick = {}
     )
 }

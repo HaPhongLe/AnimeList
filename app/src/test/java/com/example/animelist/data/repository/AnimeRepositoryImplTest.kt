@@ -5,10 +5,11 @@ import com.example.animelist.MainDispatcherRule
 import com.example.animelist.data.api.AnimeApi
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
+import com.example.animelist.domain.model.AnimeDetails
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -27,6 +28,7 @@ class AnimeRepositoryImplTest {
             coEvery { getTopTrendingAnime(1) } returns firstSetOfAnime
             coEvery { getTopTrendingAnime(2) } returns secondSetOfAnime
             coEvery { getTopTrendingAnime(3) } returns thirdSetOfAnime
+            coEvery { getAnimeDetailsById(any()) } returns AnimeDetails.mock()
         }
     ) = AnimeRepositoryImpl(animeApi)
 
@@ -39,7 +41,7 @@ class AnimeRepositoryImplTest {
     }
 
     @Test
-    fun `getTrendingAnime should correctly return list of anime when scrolling`() = runBlocking {
+    fun `getTrendingAnime should correctly return list of anime when scrolling`() = runTest {
         val repo = createSut()
         val flow = repo.getTrendingAnime()
         val items = flow.asSnapshot {
@@ -47,5 +49,13 @@ class AnimeRepositoryImplTest {
             delay(5000)
         }
         assertEquals(firstSetOfAnime + secondSetOfAnime + thirdSetOfAnime, items)
+    }
+
+    @Test
+    fun `getAnimeDetailsById should correctly return animeDetails`() = runTest {
+        val repo = createSut()
+        val result = repo.getAnimeById(1)
+        advanceUntilIdle()
+        assertEquals(AnimeDetails.Companion.mock(), result)
     }
 }

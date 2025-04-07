@@ -2,12 +2,11 @@ package com.example.animelist.domain.mockModel
 
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.domain.model.CoverImage
-import com.example.animelist.domain.model.Title
 
 fun Anime.Companion.mock(
     id: Int = 1,
     averageScore: Int? = 85,
-    title: Title? = Title.mock(),
+    title: String? = "Dandadan",
     coverImage: CoverImage? = CoverImage.mock(),
     studios: List<String> = listOf("8-bit"),
     genres: List<String> = listOf("Action")
@@ -18,12 +17,6 @@ fun Anime.Companion.mock(
     coverImage = coverImage,
     studios = studios,
     genres = genres
-)
-
-fun Title.Companion.mock(
-    english: String = "Dandadan"
-) = Title(
-    english = english
 )
 
 fun CoverImage.Companion.mock() = CoverImage(

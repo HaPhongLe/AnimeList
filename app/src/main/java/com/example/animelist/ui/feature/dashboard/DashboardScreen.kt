@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.animelist.R
@@ -39,28 +40,31 @@ import com.example.animelist.domain.model.Anime
 import com.example.animelist.ui.component.ErrorDialog
 import com.example.animelist.ui.component.FullScreenLoading
 import com.example.animelist.ui.feature.dashboard.component.AnimeCard
+import com.example.animelist.ui.feature.detail.navigation.navigateToAnimeDetails
 import com.example.animelist.ui.theme.AppTheme
 
 @Composable
 fun DashboardScreen(
-    dashboardViewModel: DashboardViewModel = hiltViewModel()
+    navHostController: NavHostController,
+    viewModel: DashboardViewModel = hiltViewModel()
 ) {
-    val animeLazyPagingItems = dashboardViewModel.animeState.collectAsLazyPagingItems()
-    val viewState by dashboardViewModel.viewState.collectAsStateWithLifecycle()
+    val animeLazyPagingItems = viewModel.animeState.collectAsLazyPagingItems()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     var errorRefreshingDialog by remember {
         mutableStateOf<String?>(null)
     }
     LaunchedEffect(Unit) {
-        dashboardViewModel.setOnRefresh(animeLazyPagingItems::refresh)
-        dashboardViewModel.eventFlow.collect { event ->
+        viewModel.setOnRefresh(animeLazyPagingItems::refresh)
+        viewModel.eventFlow.collect { event ->
             when (event) {
                 is DashboardViewModel.Event.RefreshError -> errorRefreshingDialog = event.message
+                is DashboardViewModel.Event.NavigateToDetailsScreen -> navHostController.navigateToAnimeDetails(animeId = event.animeId)
             }
         }
     }
 
     LaunchedEffect(animeLazyPagingItems.loadState) {
-        dashboardViewModel.onLoadStateReceived(animeLazyPagingItems.loadState)
+        viewModel.onLoadStateReceived(animeLazyPagingItems.loadState)
     }
 
     errorRefreshingDialog?.let {
@@ -78,7 +82,8 @@ fun DashboardScreen(
         modifier = Modifier.background(color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.05f)),
         viewState = viewState,
         lazyPagingItems = animeLazyPagingItems,
-        onRefresh = { dashboardViewModel.onRefresh.invoke() }
+        onRefresh = { viewModel.onRefresh.invoke() },
+        onAnimeClick = viewModel::onAnimeClick
     )
 }
 
@@ -88,7 +93,8 @@ private fun DashboardScreen(
     modifier: Modifier = Modifier,
     viewState: DashboardViewModel.ViewState,
     lazyPagingItems: LazyPagingItems<Anime>,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onAnimeClick: (Int) -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize()
@@ -111,7 +117,8 @@ private fun DashboardScreen(
                 isAppending = viewState.isAppendingLoading,
                 appendingError = viewState.appendError,
                 onRefresh = onRefresh,
-                lazyPagingItems = lazyPagingItems
+                lazyPagingItems = lazyPagingItems,
+                onAnimeClick = onAnimeClick
             )
         }
     }
@@ -125,7 +132,8 @@ private fun PullToRefreshAnimeList(
     isAppending: Boolean,
     onRefresh: () -> Unit,
     lazyPagingItems: LazyPagingItems<Anime>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAnimeClick: (Int) -> Unit
 ) {
     val state = rememberPullToRefreshState()
     PullToRefreshBox(
@@ -151,7 +159,8 @@ private fun PullToRefreshAnimeList(
                     }
                     AnimeCard(
                         anime = get(index)!!,
-                        ranking = index + 1
+                        ranking = index + 1,
+                        onClick = onAnimeClick
                     )
                 }
 

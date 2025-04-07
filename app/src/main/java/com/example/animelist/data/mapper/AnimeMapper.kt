@@ -3,7 +3,6 @@ package com.example.animelist.data.mapper
 import com.example.TrendingAnimeQuery
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.domain.model.CoverImage
-import com.example.animelist.domain.model.Title
 
 fun TrendingAnimeQuery.Medium.toAnime(): Anime {
     return Anime(
@@ -16,9 +15,7 @@ fun TrendingAnimeQuery.Medium.toAnime(): Anime {
     )
 }
 
-fun TrendingAnimeQuery.Title.toTitle(): Title = Title(
-    english = english
-)
+fun TrendingAnimeQuery.Title.toTitle(): String? = english ?: userPreferred
 
 fun TrendingAnimeQuery.CoverImage.toCoverImage() = CoverImage(
     color = color,

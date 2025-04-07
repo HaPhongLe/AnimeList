@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    animeRepository: AnimeRepository,
+    private val animeRepository: AnimeRepository,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
@@ -51,12 +51,6 @@ class DashboardViewModel @Inject constructor(
         onRefresh = onRefreshFunction
     }
 
-    private fun emitEvent(event: Event) {
-        viewModelScope.launch {
-            _eventFlow.emit(event)
-        }
-    }
-
     fun onLoadStateReceived(loadStates: CombinedLoadStates) {
         val isRefreshing = loadStates.refresh is LoadState.Loading
         val isAppending = loadStates.append is LoadState.Loading
@@ -80,6 +74,16 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    fun onAnimeClick(id: Int) {
+        emitEvent(Event.NavigateToDetailsScreen(id))
+    }
+
+    private fun emitEvent(event: Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
     data class ViewState(
         val isAppendingLoading: Boolean = false,
         val appendError: String? = null,
@@ -89,5 +93,6 @@ class DashboardViewModel @Inject constructor(
 
     sealed interface Event {
         data class RefreshError(val message: String) : Event
+        data class NavigateToDetailsScreen(val animeId: Int) : Event
     }
 }

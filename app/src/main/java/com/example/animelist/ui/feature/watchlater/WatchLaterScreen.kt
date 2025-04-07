@@ -6,10 +6,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 
 @Composable
-fun WatchLaterScreen() {
+fun WatchLaterScreen(
+    navHostController: NavHostController
+) {
     Box(modifier = Modifier.fillMaxSize()) {
-        Text(modifier = Modifier.align(Alignment.Center), text = "WatchLater")
+        Text(modifier = Modifier.align(Alignment.Center), text = "No title")
     }
 }
