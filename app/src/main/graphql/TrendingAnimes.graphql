@@ -52,5 +52,12 @@ query AnimeById($mediaId: Int) {
             year
         }
         status
+        streamingEpisodes {
+            site
+            url
+            title
+            thumbnail
+        }
+        episodes
     }
 }

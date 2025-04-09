@@ -28,20 +28,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.animelist.R
+import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.ui.component.ErrorDialog
 import com.example.animelist.ui.component.FullScreenLoading
 import com.example.animelist.ui.feature.dashboard.component.AnimeCard
 import com.example.animelist.ui.feature.detail.navigation.navigateToAnimeDetails
 import com.example.animelist.ui.theme.AppTheme
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun DashboardScreen(
@@ -193,4 +197,33 @@ private fun ErrorMessage(
     onClickRetry: () -> Unit = {}
 ) {
     Text(modifier = modifier.clickable { onClickRetry.invoke() }, text = message)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DashboardScreen_Success() {
+    val mockData = mutableListOf<Anime>()
+    (1..10).forEach { _ ->
+        mockData.add(Anime.mock())
+    }
+    val lazyPagingItems = flowOf(PagingData.from(mockData)).collectAsLazyPagingItems()
+
+    DashboardScreen(
+        viewState = DashboardViewModel.ViewState(isLoading = false),
+        lazyPagingItems = lazyPagingItems,
+        onRefresh = {},
+        onAnimeClick = {}
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DashboardScreen_Error() {
+    val lazyPagingItems = flowOf(PagingData.from(emptyList<Anime>())).collectAsLazyPagingItems()
+    DashboardScreen(
+        viewState = DashboardViewModel.ViewState(isLoading = false, appendError = "Error load data"),
+        lazyPagingItems = lazyPagingItems,
+        onRefresh = {},
+        onAnimeClick = {}
+    )
 }

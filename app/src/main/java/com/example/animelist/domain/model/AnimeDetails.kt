@@ -9,7 +9,9 @@ data class AnimeDetails(
     val description: String?,
     val endDate: DateInfo?,
     val startDate: DateInfo?,
-    val status: String?
+    val status: String?,
+    val episodes: Int?,
+    val streamingEpisodes: List<StreamingEpisode>
 ) {
     companion object Companion
 }
@@ -33,6 +35,15 @@ data class AiringScheduleNode(
     val episodes: Int,
     val id: Int,
     val timeUtilAiring: Int
+) {
+    companion object Companion
+}
+
+data class StreamingEpisode(
+    val site: String?,
+    val url: String?,
+    val title: String?,
+    val thumbnail: String?
 ) {
     companion object Companion
 }

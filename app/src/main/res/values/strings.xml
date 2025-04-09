@@ -9,4 +9,6 @@
 
     <string name="trending_title">Trending</string>
     <string name="average_score">Average Score: %d</string>
+    <string name="score">Score: %d</string>
+    <string name="episodes">Episodes: %d</string>
 </resources>
