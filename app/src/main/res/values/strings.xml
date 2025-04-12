@@ -11,4 +11,6 @@
     <string name="average_score">Average Score: %d</string>
     <string name="score">Score: %d</string>
     <string name="episodes">Episodes: %d</string>
+    <string name="show_more">Show More</string>
+    <string name="show_less">Show Less</string>
 </resources>
