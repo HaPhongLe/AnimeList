@@ -10,6 +10,7 @@ import com.example.animelist.MainDispatcherRule
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.domain.repository.AnimeRepository
+import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.util.ResourceProvider
 import io.mockk.every
 import io.mockk.mockk
@@ -42,7 +43,7 @@ class DashboardViewModelTest {
     )
     private fun createSut(
         animeRepository: AnimeRepository = mockk {
-            every { getTrendingAnime() } returns flowOf(PagingData.from(mockAnimeList))
+            every { getTopAnime(sortType = SortType.Trending) } returns flowOf(PagingData.from(mockAnimeList))
         },
         resourceProvider: ResourceProvider = mockk {
             every { stringForRes(any()) } returns "Error"

@@ -4,9 +4,11 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.animelist.data.api.AnimeApi
 import com.example.animelist.domain.model.Anime
+import com.example.animelist.domain.repository.SortType
 
 class AnimePagingSource(
-    val animeApi: AnimeApi
+    val animeApi: AnimeApi,
+    val sortType: SortType
 ) : PagingSource<Int, Anime>() {
     override fun getRefreshKey(state: PagingState<Int, Anime>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -19,7 +21,7 @@ class AnimePagingSource(
         return try {
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
-            val response = animeApi.getTopTrendingAnime(page = nextPageNumber)
+            val response = animeApi.getTopAnime(page = nextPageNumber, sortType = sortType)
             LoadResult.Page(
                 data = response,
                 prevKey = if (nextPageNumber == 1) null else nextPageNumber - 1,

@@ -6,6 +6,11 @@ import com.example.animelist.domain.model.AnimeDetails
 import kotlinx.coroutines.flow.Flow
 
 interface AnimeRepository {
-    fun getTrendingAnime(): Flow<PagingData<Anime>>
+    fun getTopAnime(sortType: SortType): Flow<PagingData<Anime>>
     suspend fun getAnimeById(id: Int): AnimeDetails?
+}
+
+enum class SortType {
+    Trending,
+    Popular
 }

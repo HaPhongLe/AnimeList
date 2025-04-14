@@ -1,4 +1,4 @@
-query TrendingAnime($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: MediaType!) {
+query GetAnimeBySortType($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: MediaType!) {
     Page(page: $page, perPage: $perPage) {
         media(sort: $sort, type: $type) {
             title {

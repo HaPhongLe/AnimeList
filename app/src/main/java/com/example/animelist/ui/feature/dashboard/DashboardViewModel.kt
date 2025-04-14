@@ -9,6 +9,7 @@ import androidx.paging.cachedIn
 import com.example.animelist.R
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.domain.repository.AnimeRepository
+import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.util.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,7 +41,7 @@ class DashboardViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            animeRepository.getTrendingAnime().distinctUntilChanged().cachedIn(viewModelScope).collect { pagingData ->
+            animeRepository.getTopAnime(sortType = SortType.Trending).distinctUntilChanged().cachedIn(viewModelScope).collect { pagingData ->
                 _animeState.update { pagingData }
                 _viewState.update { oldState -> oldState.copy(isLoading = false) }
             }

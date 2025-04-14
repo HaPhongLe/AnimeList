@@ -6,6 +6,7 @@ import com.example.animelist.data.api.AnimeApi
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
 import com.example.animelist.domain.model.AnimeDetails
+import com.example.animelist.domain.repository.SortType
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.delay
@@ -25,9 +26,9 @@ class AnimeRepositoryImplTest {
 
     private fun createSut(
         animeApi: AnimeApi = mockk {
-            coEvery { getTopTrendingAnime(1) } returns firstSetOfAnime
-            coEvery { getTopTrendingAnime(2) } returns secondSetOfAnime
-            coEvery { getTopTrendingAnime(3) } returns thirdSetOfAnime
+            coEvery { getTopAnime(1, sortType = SortType.Trending) } returns firstSetOfAnime
+            coEvery { getTopAnime(2, sortType = SortType.Trending) } returns secondSetOfAnime
+            coEvery { getTopAnime(3, sortType = SortType.Trending) } returns thirdSetOfAnime
             coEvery { getAnimeDetailsById(any()) } returns AnimeDetails.mock()
         }
     ) = AnimeRepositoryImpl(animeApi)
@@ -35,7 +36,7 @@ class AnimeRepositoryImplTest {
     @Test
     fun `getTrendingAnime should correctly return list of anime`() = runTest {
         val repo = createSut()
-        val flow = repo.getTrendingAnime()
+        val flow = repo.getTopAnime(sortType = SortType.Trending)
         val items = flow.asSnapshot()
         assertEquals(firstSetOfAnime + secondSetOfAnime, items) // account for some prefetch
     }
@@ -43,7 +44,7 @@ class AnimeRepositoryImplTest {
     @Test
     fun `getTrendingAnime should correctly return list of anime when scrolling`() = runTest {
         val repo = createSut()
-        val flow = repo.getTrendingAnime()
+        val flow = repo.getTopAnime(sortType = SortType.Trending)
         val items = flow.asSnapshot {
             scrollTo(19)
             delay(5000)
