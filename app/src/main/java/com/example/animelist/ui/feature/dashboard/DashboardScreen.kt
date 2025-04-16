@@ -40,8 +40,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.animelist.R
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
+import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.component.ErrorDialog
 import com.example.animelist.ui.component.FullScreenLoading
+import com.example.animelist.ui.component.SortTypeDropDownMenu
 import com.example.animelist.ui.feature.dashboard.component.AnimeCard
 import com.example.animelist.ui.feature.detail.navigation.navigateToAnimeDetails
 import com.example.animelist.ui.theme.AppTheme
@@ -87,7 +89,8 @@ fun DashboardScreen(
         viewState = viewState,
         lazyPagingItems = animeLazyPagingItems,
         onRefresh = { viewModel.onRefresh.invoke() },
-        onAnimeClick = viewModel::onAnimeClick
+        onAnimeClick = viewModel::onAnimeClick,
+        onSortTypeClick = viewModel::onSortTypeClick
     )
 }
 
@@ -98,7 +101,8 @@ private fun DashboardScreen(
     viewState: DashboardViewModel.ViewState,
     lazyPagingItems: LazyPagingItems<Anime>,
     onRefresh: () -> Unit,
-    onAnimeClick: (Int) -> Unit
+    onAnimeClick: (Int) -> Unit,
+    onSortTypeClick: (SortType) -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize()
@@ -107,11 +111,17 @@ private fun DashboardScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(AppTheme.dimension.spaceM),
-            text = stringResource(R.string.trending_title).uppercase(),
+            text = stringResource(R.string.anime_title).uppercase(),
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
+        )
+        SortTypeDropDownMenu(
+            modifier = Modifier.padding(AppTheme.dimension.spaceL),
+            options = SortType.entries,
+            selectedOption = viewState.selectedSortType,
+            onOptionClick = onSortTypeClick
         )
         if (viewState.isLoading) {
             FullScreenLoading()
@@ -212,7 +222,8 @@ private fun DashboardScreen_Success() {
         viewState = DashboardViewModel.ViewState(isLoading = false),
         lazyPagingItems = lazyPagingItems,
         onRefresh = {},
-        onAnimeClick = {}
+        onAnimeClick = {},
+        onSortTypeClick = {}
     )
 }
 
@@ -224,6 +235,7 @@ private fun DashboardScreen_Error() {
         viewState = DashboardViewModel.ViewState(isLoading = false, appendError = "Error load data"),
         lazyPagingItems = lazyPagingItems,
         onRefresh = {},
-        onAnimeClick = {}
+        onAnimeClick = {},
+        onSortTypeClick = {}
     )
 }

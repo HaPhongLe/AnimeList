@@ -14,6 +14,7 @@ import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.util.ResourceProvider
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -43,7 +44,7 @@ class DashboardViewModelTest {
     )
     private fun createSut(
         animeRepository: AnimeRepository = mockk {
-            every { getTopAnime(sortType = SortType.Trending) } returns flowOf(PagingData.from(mockAnimeList))
+            every { getTopAnime(sortType = any()) } returns flowOf(PagingData.from(mockAnimeList))
         },
         resourceProvider: ResourceProvider = mockk {
             every { stringForRes(any()) } returns "Error"
@@ -133,5 +134,17 @@ class DashboardViewModelTest {
             advanceUntilIdle()
             assertEquals(awaitItem(), DashboardViewModel.Event.RefreshError("Appending Error!"))
         }
+    }
+
+    @Test
+    fun `onSortTypeClick should update viewState sort type and call getTopAnime by AnimeRepository`() = runTest {
+        val mockAnimeRepository: AnimeRepository = mockk {
+            every { getTopAnime(sortType = any()) } returns flowOf(androidx.paging.PagingData.from(mockAnimeList))
+        }
+        val sut = createSut(animeRepository = mockAnimeRepository)
+        sut.onSortTypeClick(sortType = SortType.Popular)
+        assertEquals(DashboardViewModel.ViewState(selectedSortType = SortType.Popular), sut.viewState.value)
+        advanceUntilIdle()
+        verify { mockAnimeRepository.getTopAnime(sortType = SortType.Popular) }
     }
 }

@@ -40,8 +40,12 @@ class DashboardViewModel @Inject constructor(
         private set
 
     init {
+        fetchData(viewState.value.selectedSortType)
+    }
+
+    private fun fetchData(sortType: SortType) {
         viewModelScope.launch {
-            animeRepository.getTopAnime(sortType = SortType.Trending).distinctUntilChanged().cachedIn(viewModelScope).collect { pagingData ->
+            animeRepository.getTopAnime(sortType = sortType).distinctUntilChanged().cachedIn(viewModelScope).collect { pagingData ->
                 _animeState.update { pagingData }
                 _viewState.update { oldState -> oldState.copy(isLoading = false) }
             }
@@ -79,6 +83,11 @@ class DashboardViewModel @Inject constructor(
         emitEvent(Event.NavigateToDetailsScreen(id))
     }
 
+    fun onSortTypeClick(sortType: SortType) {
+        _viewState.update { it.copy(selectedSortType = sortType) }
+        fetchData(sortType)
+    }
+
     private fun emitEvent(event: Event) {
         viewModelScope.launch {
             _eventFlow.emit(event)
@@ -89,7 +98,8 @@ class DashboardViewModel @Inject constructor(
         val isAppendingLoading: Boolean = false,
         val appendError: String? = null,
         val isRefreshing: Boolean = false,
-        val isLoading: Boolean = true
+        val isLoading: Boolean = true,
+        val selectedSortType: SortType = SortType.Trending
     )
 
     sealed interface Event {
