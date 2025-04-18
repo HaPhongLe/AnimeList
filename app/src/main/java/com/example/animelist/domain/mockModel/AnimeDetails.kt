@@ -2,11 +2,11 @@ package com.example.animelist.domain.mockModel
 
 import com.example.animelist.domain.model.AiringSchedule
 import com.example.animelist.domain.model.AiringScheduleNode
-import com.example.animelist.domain.model.AnimeDetails
 import com.example.animelist.domain.model.DateInfo
+import com.example.animelist.domain.model.MediaDetails
 import com.example.animelist.domain.model.StreamingEpisode
 
-fun AnimeDetails.Companion.mock(
+fun MediaDetails.Companion.mock(
     bannerImage: String? = "https://s4.anilist.co/file/anilistcdn/media/anime/banner/1-OquNCNB6srGe.jpg",
     title: String? = "Cowboy Bebop",
     genres: List<String>? = listOf(
@@ -22,7 +22,7 @@ fun AnimeDetails.Companion.mock(
     startDate: DateInfo? = DateInfo.mock(day = 3, month = 4, year = 1998),
     status: String? = "FINISHED",
     episodes: Int? = 13
-) = AnimeDetails(
+) = MediaDetails(
     bannerImage = bannerImage,
     title = title,
     genres = genres,

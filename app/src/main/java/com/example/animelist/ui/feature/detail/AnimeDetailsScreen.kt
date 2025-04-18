@@ -38,8 +38,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.animelist.R
 import com.example.animelist.domain.mockModel.mock
-import com.example.animelist.domain.model.AnimeDetails
-import com.example.animelist.ui.feature.dashboard.component.FullScreenLoading
+import com.example.animelist.domain.model.MediaDetails
+import com.example.animelist.ui.component.FullScreenLoading
 import com.example.animelist.ui.feature.detail.component.BasicInfo
 import com.example.animelist.ui.feature.detail.component.FadedImage
 import com.example.animelist.ui.feature.detail.component.StreamingEpisodes
@@ -59,14 +59,14 @@ fun AnimeDetailsScreen(
 
     when (viewState) {
         AnimeDetailsViewModel.ViewState.Loading -> FullScreenLoading()
-        is AnimeDetailsViewModel.ViewState.Success -> AnimeDetailsSuccessScreen(animeDetails = (viewState as AnimeDetailsViewModel.ViewState.Success).animeDetails)
+        is AnimeDetailsViewModel.ViewState.Success -> AnimeDetailsSuccessScreen(mediaDetails = (viewState as AnimeDetailsViewModel.ViewState.Success).mediaDetails)
         is AnimeDetailsViewModel.ViewState.Error -> AnimeDetailsErrorScreen((viewState as AnimeDetailsViewModel.ViewState.Error).message)
     }
 }
 
 @Composable
 private fun AnimeDetailsSuccessScreen(
-    animeDetails: AnimeDetails,
+    mediaDetails: MediaDetails,
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
@@ -75,7 +75,7 @@ private fun AnimeDetailsSuccessScreen(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        FadedImage(imageUrl = animeDetails.bannerImage)
+        FadedImage(imageUrl = mediaDetails.bannerImage)
 
         Column(
             modifier = Modifier
@@ -85,7 +85,7 @@ private fun AnimeDetailsSuccessScreen(
             verticalArrangement = Arrangement.spacedBy(AppTheme.dimension.spaceM),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            animeDetails.title?.let {
+            mediaDetails.title?.let {
                 Text(
                     text = it,
                     fontSize = 24.sp,
@@ -93,9 +93,9 @@ private fun AnimeDetailsSuccessScreen(
                 )
             }
 
-            BasicInfo(animeDetails = animeDetails)
+            BasicInfo(mediaDetails = mediaDetails)
 
-            animeDetails.description?.let {
+            mediaDetails.description?.let {
                 ExpandableTextView(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -104,7 +104,7 @@ private fun AnimeDetailsSuccessScreen(
                     textLengthToCutOff = 400
                 )
             }
-            StreamingEpisodes(streamingEpisode = animeDetails.streamingEpisodes)
+            StreamingEpisodes(streamingEpisode = mediaDetails.streamingEpisodes)
         }
     }
 }
@@ -172,7 +172,7 @@ private fun AnimeDetailsErrorScreen(
 @Composable
 private fun AnimeDetailsSuccessScreen_Preview() {
     AnimeListTheme {
-        AnimeDetailsSuccessScreen(animeDetails = AnimeDetails.mock())
+        AnimeDetailsSuccessScreen(mediaDetails = MediaDetails.mock())
     }
 }
 

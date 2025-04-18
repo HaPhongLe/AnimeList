@@ -8,6 +8,7 @@
     <string name="error_refreshing">Error Refreshing!</string>
 
     <string name="anime_title">Anime</string>
+    <string name="manga_title">Manga</string>
     <string name="average_score">Average Score: %d</string>
     <string name="score">Score: %d</string>
     <string name="episodes">Episodes: %d</string>

@@ -2,15 +2,22 @@ package com.example.animelist.domain.repository
 
 import androidx.paging.PagingData
 import com.example.animelist.domain.model.Anime
-import com.example.animelist.domain.model.AnimeDetails
+import com.example.animelist.domain.model.Manga
+import com.example.animelist.domain.model.MediaDetails
 import kotlinx.coroutines.flow.Flow
 
 interface AnimeRepository {
     fun getTopAnime(sortType: SortType): Flow<PagingData<Anime>>
-    suspend fun getAnimeById(id: Int): AnimeDetails?
+    fun getTopManga(sortType: SortType): Flow<PagingData<Manga>>
+    suspend fun getMediaById(id: Int): MediaDetails?
 }
 
 enum class SortType {
     Trending,
     Popular
+}
+
+enum class MediaType {
+    Anime,
+    Manga
 }

@@ -2,7 +2,7 @@ package com.example.animelist.ui.feature.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.animelist.domain.model.AnimeDetails
+import com.example.animelist.domain.model.MediaDetails
 import com.example.animelist.domain.repository.AnimeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +23,7 @@ class AnimeDetailsViewModel @Inject constructor(
         if (animeId != currentAnimeId) {
             viewModelScope.launch {
                 try {
-                    val animeDetails = animeRepository.getAnimeById(animeId)
+                    val animeDetails = animeRepository.getMediaById(animeId)
                     animeDetails?.let { details ->
                         _viewState.update { ViewState.Success(details) }
                         currentAnimeId = animeId
@@ -38,6 +38,6 @@ class AnimeDetailsViewModel @Inject constructor(
     sealed interface ViewState {
         data object Loading : ViewState
         data class Error(val message: String) : ViewState
-        data class Success(val animeDetails: AnimeDetails) : ViewState
+        data class Success(val mediaDetails: MediaDetails) : ViewState
     }
 }

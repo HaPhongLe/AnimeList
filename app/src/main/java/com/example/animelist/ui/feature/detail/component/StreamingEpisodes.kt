@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.animelist.domain.mockModel.mock
-import com.example.animelist.domain.model.AnimeDetails
+import com.example.animelist.domain.model.MediaDetails
 import com.example.animelist.domain.model.StreamingEpisode
 import com.example.animelist.ui.theme.AnimeListTheme
 import com.example.animelist.ui.theme.AppTheme
@@ -75,6 +75,6 @@ private fun Episode(
 @Composable
 private fun StreamingEpisodes_Preview() {
     AnimeListTheme {
-        StreamingEpisodes(streamingEpisode = AnimeDetails.mock().streamingEpisodes)
+        StreamingEpisodes(streamingEpisode = MediaDetails.mock().streamingEpisodes)
     }
 }

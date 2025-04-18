@@ -1,6 +1,6 @@
 package com.example.animelist.domain.model
 
-data class AnimeDetails(
+data class MediaDetails(
     val bannerImage: String?,
     val title: String?,
     val genres: List<String>?,

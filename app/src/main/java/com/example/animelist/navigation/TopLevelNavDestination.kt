@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.example.animelist.R
 import com.example.animelist.ui.feature.dashboard.navigation.DashboardGraph
 import com.example.animelist.ui.feature.interests.navigation.InterestsScreen
-import com.example.animelist.ui.feature.watchlater.navigation.WatchLaterScreenRoute
+import com.example.animelist.ui.feature.manga.navigation.MangaScreenRoute
 import kotlin.reflect.KClass
 
 enum class TopLevelNavDestination(
@@ -22,7 +22,7 @@ enum class TopLevelNavDestination(
     WATCH_LATER(
         icon = R.drawable.ic_bookmark,
         title = R.string.top_nav_saved,
-        route = WatchLaterScreenRoute::class
+        route = MangaScreenRoute::class
     ),
     INTERESTS(
         icon = R.drawable.ic_star,

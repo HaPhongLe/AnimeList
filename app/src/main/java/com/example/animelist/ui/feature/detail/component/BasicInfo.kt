@@ -14,16 +14,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.animelist.R
 import com.example.animelist.domain.mockModel.mock
-import com.example.animelist.domain.model.AnimeDetails
+import com.example.animelist.domain.model.MediaDetails
 import com.example.animelist.ui.theme.AnimeListTheme
 
 @Composable
 fun BasicInfo(
-    animeDetails: AnimeDetails,
+    mediaDetails: MediaDetails,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier.fillMaxWidth()) {
-        animeDetails.averageScore?.let {
+        mediaDetails.averageScore?.let {
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
@@ -37,7 +37,7 @@ fun BasicInfo(
             )
         }
 
-        animeDetails.episodes?.let {
+        mediaDetails.episodes?.let {
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
@@ -51,7 +51,7 @@ fun BasicInfo(
                 modifier = Modifier.height(20.dp)
             )
         }
-        animeDetails.status?.let {
+        mediaDetails.status?.let {
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
@@ -66,6 +66,6 @@ fun BasicInfo(
 @Composable
 private fun BasicInfo_Preview() {
     AnimeListTheme {
-        BasicInfo(animeDetails = AnimeDetails.mock())
+        BasicInfo(mediaDetails = MediaDetails.mock())
     }
 }

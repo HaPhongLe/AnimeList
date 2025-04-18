@@ -44,7 +44,7 @@ class DashboardViewModelTest {
     )
     private fun createSut(
         animeRepository: AnimeRepository = mockk {
-            every { getTopAnime(sortType = any()) } returns flowOf(PagingData.from(mockAnimeList))
+            every { this@mockk.getTopAnime(sortType = any()) } returns flowOf(PagingData.from(mockAnimeList))
         },
         resourceProvider: ResourceProvider = mockk {
             every { stringForRes(any()) } returns "Error"
@@ -139,7 +139,7 @@ class DashboardViewModelTest {
     @Test
     fun `onSortTypeClick should update viewState sort type and call getTopAnime by AnimeRepository`() = runTest {
         val mockAnimeRepository: AnimeRepository = mockk {
-            every { getTopAnime(sortType = any()) } returns flowOf(androidx.paging.PagingData.from(mockAnimeList))
+            every { this@mockk.getTopAnime(sortType = any()) } returns flowOf(androidx.paging.PagingData.from(mockAnimeList))
         }
         val sut = createSut(animeRepository = mockAnimeRepository)
         sut.onSortTypeClick(sortType = SortType.Popular)

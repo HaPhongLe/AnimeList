@@ -5,7 +5,7 @@ import com.example.animelist.MainDispatcherRule
 import com.example.animelist.data.api.AnimeApi
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
-import com.example.animelist.domain.model.AnimeDetails
+import com.example.animelist.domain.model.MediaDetails
 import com.example.animelist.domain.repository.SortType
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -29,7 +29,7 @@ class AnimeRepositoryImplTest {
             coEvery { getTopAnime(1, sortType = SortType.Trending) } returns firstSetOfAnime
             coEvery { getTopAnime(2, sortType = SortType.Trending) } returns secondSetOfAnime
             coEvery { getTopAnime(3, sortType = SortType.Trending) } returns thirdSetOfAnime
-            coEvery { getAnimeDetailsById(any()) } returns AnimeDetails.mock()
+            coEvery { getMediaDetailsById(any()) } returns MediaDetails.mock()
         }
     ) = AnimeRepositoryImpl(animeApi)
 
@@ -55,8 +55,8 @@ class AnimeRepositoryImplTest {
     @Test
     fun `getAnimeDetailsById should correctly return animeDetails`() = runTest {
         val repo = createSut()
-        val result = repo.getAnimeById(1)
+        val result = repo.getMediaById(1)
         advanceUntilIdle()
-        assertEquals(AnimeDetails.Companion.mock(), result)
+        assertEquals(MediaDetails.Companion.mock(), result)
     }
 }

@@ -12,7 +12,7 @@ import androidx.navigation.navOptions
 import com.example.animelist.navigation.TopLevelNavDestination
 import com.example.animelist.ui.feature.dashboard.navigation.navigateToDashboard
 import com.example.animelist.ui.feature.interests.navigation.navigateToInterests
-import com.example.animelist.ui.feature.watchlater.navigation.navigateToWatchLater
+import com.example.animelist.ui.feature.manga.navigation.navigateToMangaScreen
 
 @Composable
 fun rememberAppState(
@@ -45,7 +45,7 @@ class AppState(
 
         when (topLevelNavDestination) {
             TopLevelNavDestination.DASH_BOARD -> navController.navigateToDashboard(topLevelNavOptions)
-            TopLevelNavDestination.WATCH_LATER -> navController.navigateToWatchLater(topLevelNavOptions)
+            TopLevelNavDestination.WATCH_LATER -> navController.navigateToMangaScreen(topLevelNavOptions)
             TopLevelNavDestination.INTERESTS -> navController.navigateToInterests(topLevelNavOptions)
         }
     }
