@@ -16,7 +16,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
-class AnimeRepositoryImplTest {
+class MediaRepositoryImplTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
@@ -31,7 +31,7 @@ class AnimeRepositoryImplTest {
             coEvery { getTopAnime(3, sortType = SortType.Trending) } returns thirdSetOfAnime
             coEvery { getMediaDetailsById(any()) } returns MediaDetails.mock()
         }
-    ) = AnimeRepositoryImpl(animeApi)
+    ) = MediaRepositoryImpl(animeApi)
 
     @Test
     fun `getTrendingAnime should correctly return list of anime`() = runTest {

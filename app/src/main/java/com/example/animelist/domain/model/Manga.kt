@@ -6,6 +6,6 @@ data class Manga(
     val title: String?,
     val coverImage: CoverImage?,
     val genres: List<String>
-){
+) {
     companion object Companion
 }

@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.example.animelist.MainDispatcherRule
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.MediaDetails
-import com.example.animelist.domain.repository.AnimeRepository
+import com.example.animelist.domain.repository.MediaRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -17,10 +17,10 @@ class MediaDetailsViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     private fun createSut(
-        animeRepository: AnimeRepository = mockk {
+        mediaRepository: MediaRepository = mockk {
             coEvery { getMediaById(any()) } returns MediaDetails.mock()
         }
-    ) = AnimeDetailsViewModel(animeRepository)
+    ) = AnimeDetailsViewModel(mediaRepository)
 
     @Test
     fun `onResume would correctly update viewState with animeDetails fetched`() = runTest {
@@ -35,7 +35,7 @@ class MediaDetailsViewModelTest {
     @Test
     fun `onResume would correctly update viewState if api calls fails`() = runTest {
         val sut = createSut(
-            animeRepository = mockk {
+            mediaRepository = mockk {
                 coEvery { getMediaById(any()) } throws Exception("Fails to fetch anime")
             }
         )

@@ -46,10 +46,9 @@ class ApolloAnimeApi(
             ?.Page
             ?.media
             ?.filterNotNull()
-            ?.map { medium: GetMangaBySortTypeQuery.Medium ->  medium.toManga()}
+            ?.map { medium: GetMangaBySortTypeQuery.Medium -> medium.toManga() }
             ?: emptyList()
     }
-
 
     override suspend fun getMediaDetailsById(id: Int): MediaDetails? =
         try {

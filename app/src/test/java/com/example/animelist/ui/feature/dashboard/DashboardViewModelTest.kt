@@ -9,7 +9,7 @@ import app.cash.turbine.test
 import com.example.animelist.MainDispatcherRule
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Anime
-import com.example.animelist.domain.repository.AnimeRepository
+import com.example.animelist.domain.repository.MediaRepository
 import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.util.ResourceProvider
 import io.mockk.every
@@ -43,13 +43,13 @@ class DashboardViewModelTest {
         source = mockLoadStateSource
     )
     private fun createSut(
-        animeRepository: AnimeRepository = mockk {
+        mediaRepository: MediaRepository = mockk {
             every { this@mockk.getTopAnime(sortType = any()) } returns flowOf(PagingData.from(mockAnimeList))
         },
         resourceProvider: ResourceProvider = mockk {
             every { stringForRes(any()) } returns "Error"
         }
-    ) = DashboardViewModel(animeRepository = animeRepository, resourceProvider = resourceProvider)
+    ) = DashboardViewModel(mediaRepository = mediaRepository, resourceProvider = resourceProvider)
 
     @Test
     fun `init viewmodel should update animeList and viewState`() = runTest {
@@ -138,13 +138,13 @@ class DashboardViewModelTest {
 
     @Test
     fun `onSortTypeClick should update viewState sort type and call getTopAnime by AnimeRepository`() = runTest {
-        val mockAnimeRepository: AnimeRepository = mockk {
+        val mockMediaRepository: MediaRepository = mockk {
             every { this@mockk.getTopAnime(sortType = any()) } returns flowOf(androidx.paging.PagingData.from(mockAnimeList))
         }
-        val sut = createSut(animeRepository = mockAnimeRepository)
+        val sut = createSut(mediaRepository = mockMediaRepository)
         sut.onSortTypeClick(sortType = SortType.Popular)
         assertEquals(DashboardViewModel.ViewState(selectedSortType = SortType.Popular), sut.viewState.value)
         advanceUntilIdle()
-        verify { mockAnimeRepository.getTopAnime(sortType = SortType.Popular) }
+        verify { mockMediaRepository.getTopAnime(sortType = SortType.Popular) }
     }
 }

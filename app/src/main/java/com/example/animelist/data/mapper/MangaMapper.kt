@@ -4,7 +4,7 @@ import com.example.GetMangaBySortTypeQuery
 import com.example.animelist.domain.model.CoverImage
 import com.example.animelist.domain.model.Manga
 
-fun  GetMangaBySortTypeQuery.Medium.toManga(): Manga {
+fun GetMangaBySortTypeQuery.Medium.toManga(): Manga {
     return Manga(
         id = id,
         averageScore = averageScore,

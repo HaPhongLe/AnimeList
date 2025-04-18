@@ -115,7 +115,7 @@ private fun MangaScreen(
         if (viewState.isLoading) {
             FullScreenLoading()
         } else {
-            PullToRefreshMangaList (
+            PullToRefreshMangaList(
                 isRefreshing = viewState.isRefreshing,
                 isAppending = viewState.isAppendingLoading,
                 appendingError = viewState.appendError,
@@ -136,7 +136,7 @@ private fun MangaScreen_Success_Preview() {
     }
     val lazyPagingItems = flowOf(PagingData.from(mockData)).collectAsLazyPagingItems()
 
-    MangaScreen (
+    MangaScreen(
         viewState = MangaViewModel.ViewState(isLoading = false),
         lazyPagingItems = lazyPagingItems,
         onRefresh = {},

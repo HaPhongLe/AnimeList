@@ -11,4 +11,3 @@ interface AnimeApi {
     suspend fun getTopManga(page: Int = 1, perPage: Int = MEDIA_PER_PAGE, sortType: SortType): List<Manga>
     suspend fun getMediaDetailsById(id: Int): MediaDetails?
 }
-

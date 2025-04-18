@@ -21,7 +21,7 @@ class MangaPagingSource(
         return try {
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
-            val response = animeApi.getTopManga(page = nextPageNumber,sortType = sortType)
+            val response = animeApi.getTopManga(page = nextPageNumber, sortType = sortType)
             LoadResult.Page(
                 data = response,
                 prevKey = if (nextPageNumber == 1) null else nextPageNumber - 1,

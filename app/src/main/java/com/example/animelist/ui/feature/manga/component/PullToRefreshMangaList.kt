@@ -56,7 +56,7 @@ fun PullToRefreshMangaList(
                     if (index != 0) {
                         Spacer(modifier = Modifier.height(AppTheme.dimension.spaceM))
                     }
-                    MangaCard (
+                    MangaCard(
                         manga = get(index)!!,
                         ranking = index + 1,
                         onClick = onAnimeClick

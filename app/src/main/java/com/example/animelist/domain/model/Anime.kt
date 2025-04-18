@@ -10,5 +10,3 @@ data class Anime(
 ) {
     companion object Companion
 }
-
-

@@ -20,7 +20,6 @@ import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -29,13 +28,14 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.animelist.R
+import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Manga
 import com.example.animelist.ui.theme.AppTheme
-import com.example.animelist.ui.util.hexToComposeColor
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -64,7 +64,6 @@ fun MangaCard(
                 .background(color = Color.Gray.copy(alpha = 0.9f))
                 .padding(horizontal = 8.dp)
         ) {
-            val color = remember { manga.coverImage?.color?.let { hexToComposeColor(it) } }
             manga.title?.let { Text(text = it, color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
             manga.averageScore?.let { Text(text = stringResource(R.string.average_score, it), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.spaceXS)) {
@@ -128,12 +127,12 @@ private fun AnimeAvatar(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//private fun Preview_AnimeCard() {
-//    MangaCard(
-//        manga = Anime.mock(),
-//        ranking = 1,
-//        onClick = {}
-//    )
-//}
+@Preview(showBackground = true)
+@Composable
+private fun Preview_AnimeCard() {
+    MangaCard(
+        manga = Manga.mock(),
+        ranking = 1,
+        onClick = {}
+    )
+}

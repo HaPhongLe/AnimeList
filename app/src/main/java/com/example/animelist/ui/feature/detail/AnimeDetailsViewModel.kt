@@ -3,7 +3,7 @@ package com.example.animelist.ui.feature.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animelist.domain.model.MediaDetails
-import com.example.animelist.domain.repository.AnimeRepository
+import com.example.animelist.domain.repository.MediaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AnimeDetailsViewModel @Inject constructor(
-    private val animeRepository: AnimeRepository
+    private val mediaRepository: MediaRepository
 ) : ViewModel() {
     private var currentAnimeId: Int? = null
     private val _viewState: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
@@ -23,7 +23,7 @@ class AnimeDetailsViewModel @Inject constructor(
         if (animeId != currentAnimeId) {
             viewModelScope.launch {
                 try {
-                    val animeDetails = animeRepository.getMediaById(animeId)
+                    val animeDetails = mediaRepository.getMediaById(animeId)
                     animeDetails?.let { details ->
                         _viewState.update { ViewState.Success(details) }
                         currentAnimeId = animeId

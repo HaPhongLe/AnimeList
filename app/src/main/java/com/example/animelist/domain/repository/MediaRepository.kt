@@ -6,7 +6,7 @@ import com.example.animelist.domain.model.Manga
 import com.example.animelist.domain.model.MediaDetails
 import kotlinx.coroutines.flow.Flow
 
-interface AnimeRepository {
+interface MediaRepository {
     fun getTopAnime(sortType: SortType): Flow<PagingData<Anime>>
     fun getTopManga(sortType: SortType): Flow<PagingData<Manga>>
     suspend fun getMediaById(id: Int): MediaDetails?
