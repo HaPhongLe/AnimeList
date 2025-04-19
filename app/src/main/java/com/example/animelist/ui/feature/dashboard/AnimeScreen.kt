@@ -28,22 +28,22 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.animelist.R
 import com.example.animelist.domain.mockModel.mock
-import com.example.animelist.domain.model.Anime
+import com.example.animelist.domain.model.Media
 import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.component.ErrorDialog
 import com.example.animelist.ui.component.FullScreenLoading
+import com.example.animelist.ui.component.PullToRefreshMediaList
 import com.example.animelist.ui.component.SortTypeDropDownMenu
-import com.example.animelist.ui.feature.dashboard.component.PullToRefreshAnimeList
-import com.example.animelist.ui.feature.detail.navigation.navigateToAnimeDetails
+import com.example.animelist.ui.feature.detail.navigation.navigateToMediaDetails
 import com.example.animelist.ui.theme.AppTheme
 import kotlinx.coroutines.flow.flowOf
 
 @Composable
-fun DashboardScreen(
+fun AnimeScreen(
     navHostController: NavHostController,
-    viewModel: DashboardViewModel = hiltViewModel()
+    viewModel: AnimeViewModel = hiltViewModel()
 ) {
-    val animeLazyPagingItems = viewModel.animeState.collectAsLazyPagingItems()
+    val animeLazyPagingItems = viewModel.mediaState.collectAsLazyPagingItems()
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     var errorRefreshingDialog by remember {
         mutableStateOf<String?>(null)
@@ -52,8 +52,8 @@ fun DashboardScreen(
         viewModel.setOnRefresh(animeLazyPagingItems::refresh)
         viewModel.eventFlow.collect { event ->
             when (event) {
-                is DashboardViewModel.Event.RefreshError -> errorRefreshingDialog = event.message
-                is DashboardViewModel.Event.NavigateToDetailsScreen -> navHostController.navigateToAnimeDetails(animeId = event.animeId)
+                is AnimeViewModel.Event.RefreshError -> errorRefreshingDialog = event.message
+                is AnimeViewModel.Event.NavigateToDetailsScreen -> navHostController.navigateToMediaDetails(animeId = event.animeId)
             }
         }
     }
@@ -73,7 +73,7 @@ fun DashboardScreen(
         )
     }
 
-    DashboardScreen(
+    AnimeScreen(
         modifier = Modifier.background(color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.05f)),
         viewState = viewState,
         lazyPagingItems = animeLazyPagingItems,
@@ -85,10 +85,10 @@ fun DashboardScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun DashboardScreen(
+private fun AnimeScreen(
     modifier: Modifier = Modifier,
-    viewState: DashboardViewModel.ViewState,
-    lazyPagingItems: LazyPagingItems<Anime>,
+    viewState: AnimeViewModel.ViewState,
+    lazyPagingItems: LazyPagingItems<Media>,
     onRefresh: () -> Unit,
     onAnimeClick: (Int) -> Unit,
     onSortTypeClick: (SortType) -> Unit
@@ -115,7 +115,7 @@ private fun DashboardScreen(
         if (viewState.isLoading) {
             FullScreenLoading()
         } else {
-            PullToRefreshAnimeList(
+            PullToRefreshMediaList(
                 isRefreshing = viewState.isRefreshing,
                 isAppending = viewState.isAppendingLoading,
                 appendingError = viewState.appendError,
@@ -129,15 +129,15 @@ private fun DashboardScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun DashboardScreen_Success_Preview() {
-    val mockData = mutableListOf<Anime>()
+private fun AnimeScreen_Success_Preview() {
+    val mockData = mutableListOf<Media>()
     (1..10).forEach { _ ->
-        mockData.add(Anime.mock())
+        mockData.add(Media.mock())
     }
     val lazyPagingItems = flowOf(PagingData.from(mockData)).collectAsLazyPagingItems()
 
-    DashboardScreen(
-        viewState = DashboardViewModel.ViewState(isLoading = false),
+    AnimeScreen(
+        viewState = AnimeViewModel.ViewState(isLoading = false),
         lazyPagingItems = lazyPagingItems,
         onRefresh = {},
         onAnimeClick = {},
@@ -147,10 +147,10 @@ private fun DashboardScreen_Success_Preview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun DashboardScreen_Error_Preview() {
-    val lazyPagingItems = flowOf(PagingData.from(emptyList<Anime>())).collectAsLazyPagingItems()
-    DashboardScreen(
-        viewState = DashboardViewModel.ViewState(isLoading = false, appendError = "Error load data"),
+private fun AnimeScreen_Error_Preview() {
+    val lazyPagingItems = flowOf(PagingData.from(emptyList<Media>())).collectAsLazyPagingItems()
+    AnimeScreen(
+        viewState = AnimeViewModel.ViewState(isLoading = false, appendError = "Error load data"),
         lazyPagingItems = lazyPagingItems,
         onRefresh = {},
         onAnimeClick = {},

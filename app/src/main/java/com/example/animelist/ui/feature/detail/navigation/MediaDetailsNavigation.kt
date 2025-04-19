@@ -6,6 +6,6 @@ import com.example.animelist.navigation.Route
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AnimeDetailsScreenRoute(val id: Int) : Route.Screen
+data class MediaDetailsScreenRoute(val id: Int) : Route.Screen
 
-fun NavHostController.navigateToAnimeDetails(animeId: Int, navOptions: NavOptions? = null) = navigate(route = AnimeDetailsScreenRoute(animeId), navOptions = navOptions)
+fun NavHostController.navigateToMediaDetails(animeId: Int, navOptions: NavOptions? = null) = navigate(route = MediaDetailsScreenRoute(animeId), navOptions = navOptions)

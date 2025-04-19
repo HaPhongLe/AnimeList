@@ -3,7 +3,7 @@ package com.example.animelist.navigation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.animelist.R
-import com.example.animelist.ui.feature.dashboard.navigation.DashboardGraph
+import com.example.animelist.ui.feature.dashboard.navigation.AnimeGraph
 import com.example.animelist.ui.feature.interests.navigation.InterestsScreen
 import com.example.animelist.ui.feature.manga.navigation.MangaScreenRoute
 import kotlin.reflect.KClass
@@ -17,7 +17,7 @@ enum class TopLevelNavDestination(
     DASH_BOARD(
         icon = R.drawable.ic_home,
         title = R.string.top_nav_dash_board,
-        route = DashboardGraph::class
+        route = AnimeGraph::class
     ),
     WATCH_LATER(
         icon = R.drawable.ic_bookmark,

@@ -1,4 +1,4 @@
-package com.example.animelist.ui.feature.manga.navigation
+package com.example.animelist.ui.feature.dashboard.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -7,22 +7,22 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import com.example.animelist.navigation.Route
+import com.example.animelist.ui.feature.dashboard.AnimeScreen
 import com.example.animelist.ui.feature.detail.MediaDetailsScreen
 import com.example.animelist.ui.feature.detail.navigation.MediaDetailsScreenRoute
-import com.example.animelist.ui.feature.manga.MangaScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-object MangaGraph : Route.Graph
+object AnimeGraph : Route.Graph
 
 @Serializable
-object MangaScreenRoute : Route.Screen
+object AnimeScreen : Route.Screen
 
-fun NavHostController.navigateToMangaScreen(navOptions: NavOptions) = navigate(route = MangaScreenRoute, navOptions = navOptions)
+fun NavHostController.navigateToAnime(navOptions: NavOptions) = navigate(route = AnimeGraph, navOptions = navOptions)
 
-fun NavGraphBuilder.mangaScreen(navHostController: NavHostController) {
-    navigation<MangaGraph>(startDestination = MangaScreenRoute) {
-        composable<MangaScreenRoute> { MangaScreen(navHostController) }
+fun NavGraphBuilder.animeGraph(navHostController: NavHostController) {
+    navigation<AnimeGraph>(startDestination = AnimeScreen) {
+        composable<AnimeScreen> { AnimeScreen(navHostController) }
         composable<MediaDetailsScreenRoute> { backStackEntry ->
             val animeDetailsScreen = backStackEntry.toRoute<MediaDetailsScreenRoute>()
             MediaDetailsScreen(animeId = animeDetailsScreen.id)

@@ -1,17 +1,20 @@
 package com.example.animelist.domain.mockModel
 
-import com.example.animelist.domain.model.Anime
 import com.example.animelist.domain.model.CoverImage
+import com.example.animelist.domain.model.Media
+import com.example.animelist.domain.repository.MediaType
 
-fun Anime.Companion.mock(
+fun Media.Companion.mock(
     id: Int = 1,
+    type: MediaType = MediaType.Anime,
     averageScore: Int? = 85,
     title: String? = "Dandadan",
     coverImage: CoverImage? = CoverImage.mock(),
     studios: List<String> = listOf("8-bit"),
     genres: List<String> = listOf("Action")
-) = Anime(
+) = Media(
     id = id,
+    type = type,
     averageScore = averageScore,
     title = title,
     coverImage = coverImage,

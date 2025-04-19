@@ -1,14 +1,12 @@
 package com.example.animelist.domain.repository
 
 import androidx.paging.PagingData
-import com.example.animelist.domain.model.Anime
-import com.example.animelist.domain.model.Manga
+import com.example.animelist.domain.model.Media
 import com.example.animelist.domain.model.MediaDetails
 import kotlinx.coroutines.flow.Flow
 
 interface MediaRepository {
-    fun getTopAnime(sortType: SortType): Flow<PagingData<Anime>>
-    fun getTopManga(sortType: SortType): Flow<PagingData<Manga>>
+    fun getTopMedia(type: MediaType, sortType: SortType): Flow<PagingData<Media>>
     suspend fun getMediaById(id: Int): MediaDetails?
 }
 

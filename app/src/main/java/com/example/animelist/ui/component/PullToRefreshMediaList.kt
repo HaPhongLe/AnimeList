@@ -1,4 +1,4 @@
-package com.example.animelist.ui.feature.dashboard.component
+package com.example.animelist.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,17 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import com.example.animelist.domain.model.Anime
+import com.example.animelist.domain.model.Media
 import com.example.animelist.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PullToRefreshAnimeList(
+fun PullToRefreshMediaList(
     isRefreshing: Boolean,
     appendingError: String?,
     isAppending: Boolean,
     onRefresh: () -> Unit,
-    lazyPagingItems: LazyPagingItems<Anime>,
+    lazyPagingItems: LazyPagingItems<Media>,
     modifier: Modifier = Modifier,
     onAnimeClick: (Int) -> Unit
 ) {
@@ -56,8 +56,8 @@ fun PullToRefreshAnimeList(
                     if (index != 0) {
                         Spacer(modifier = Modifier.height(AppTheme.dimension.spaceM))
                     }
-                    AnimeCard(
-                        anime = get(index)!!,
+                    MediaCard(
+                        media = get(index)!!,
                         ranking = index + 1,
                         onClick = onAnimeClick
                     )

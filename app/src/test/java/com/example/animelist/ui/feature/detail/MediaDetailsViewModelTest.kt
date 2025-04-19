@@ -20,15 +20,15 @@ class MediaDetailsViewModelTest {
         mediaRepository: MediaRepository = mockk {
             coEvery { getMediaById(any()) } returns MediaDetails.mock()
         }
-    ) = AnimeDetailsViewModel(mediaRepository)
+    ) = MediaDetailsViewModel(mediaRepository)
 
     @Test
     fun `onResume would correctly update viewState with animeDetails fetched`() = runTest {
         val sut = createSut()
         sut.viewState.test {
-            assertEquals(AnimeDetailsViewModel.ViewState.Loading, awaitItem())
+            assertEquals(MediaDetailsViewModel.ViewState.Loading, awaitItem())
             sut.onResume(animeId = 1)
-            assertEquals(AnimeDetailsViewModel.ViewState.Success(MediaDetails.mock()), awaitItem())
+            assertEquals(MediaDetailsViewModel.ViewState.Success(MediaDetails.mock()), awaitItem())
         }
     }
 
@@ -40,9 +40,9 @@ class MediaDetailsViewModelTest {
             }
         )
         sut.viewState.test {
-            assertEquals(AnimeDetailsViewModel.ViewState.Loading, awaitItem())
+            assertEquals(MediaDetailsViewModel.ViewState.Loading, awaitItem())
             sut.onResume(animeId = 1)
-            assertEquals(AnimeDetailsViewModel.ViewState.Error("Fails to fetch anime"), awaitItem())
+            assertEquals(MediaDetailsViewModel.ViewState.Error("Fails to fetch anime"), awaitItem())
         }
     }
 }

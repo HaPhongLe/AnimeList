@@ -1,4 +1,4 @@
-package com.example.animelist.ui.feature.manga.component
+package com.example.animelist.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +20,7 @@ import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -34,13 +35,14 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.animelist.R
 import com.example.animelist.domain.mockModel.mock
-import com.example.animelist.domain.model.Manga
+import com.example.animelist.domain.model.Media
 import com.example.animelist.ui.theme.AppTheme
+import com.example.animelist.ui.util.hexToComposeColor
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MangaCard(
-    manga: Manga,
+fun MediaCard(
+    media: Media,
     ranking: Int,
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit
@@ -50,11 +52,11 @@ fun MangaCard(
             .fillMaxWidth()
             .height(250.dp)
             .clip(RoundedCornerShape(AppTheme.dimension.spaceXS))
-            .clickable { onClick(manga.id) }
+            .clickable { onClick(media.id) }
     ) {
         AnimeAvatar(
             ranking = ranking,
-            imageUrl = manga.coverImage?.large
+            imageUrl = media.coverImage?.large
         )
 
         Column(
@@ -64,10 +66,14 @@ fun MangaCard(
                 .background(color = Color.Gray.copy(alpha = 0.9f))
                 .padding(horizontal = 8.dp)
         ) {
-            manga.title?.let { Text(text = it, color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
-            manga.averageScore?.let { Text(text = stringResource(R.string.average_score, it), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
+            val color = remember { media.coverImage?.color?.let { hexToComposeColor(it) } }
+            media.title?.let { Text(text = it, color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
+            media.studios.firstOrNull()?.let {
+                Text(text = it, color = color ?: MaterialTheme.colorScheme.onPrimary)
+            }
+            media.averageScore?.let { Text(text = stringResource(R.string.average_score, it), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(AppTheme.dimension.spaceXS)) {
-                manga.genres.forEach { genre ->
+                media.genres.forEach { genre ->
                     AssistChip(
                         onClick = {},
                         label = { Text(text = genre, color = Color.White) },
@@ -130,8 +136,8 @@ private fun AnimeAvatar(
 @Preview(showBackground = true)
 @Composable
 private fun Preview_AnimeCard() {
-    MangaCard(
-        manga = Manga.mock(),
+    MediaCard(
+        media = Media.mock(),
         ranking = 1,
         onClick = {}
     )

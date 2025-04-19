@@ -7,8 +7,9 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.animelist.R
-import com.example.animelist.domain.model.Manga
+import com.example.animelist.domain.model.Media
 import com.example.animelist.domain.repository.MediaRepository
+import com.example.animelist.domain.repository.MediaType
 import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.util.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,8 +27,8 @@ class MangaViewModel @Inject constructor(
     private val mediaRepository: MediaRepository,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
-    private val _animeState = MutableStateFlow<PagingData<Manga>>(PagingData.empty())
-    val animeState: StateFlow<PagingData<Manga>> get() = _animeState
+    private val _mediaState = MutableStateFlow<PagingData<Media>>(PagingData.empty())
+    val mediaState: StateFlow<PagingData<Media>> get() = _mediaState
 
     private val _viewState = MutableStateFlow(ViewState())
     val viewState: StateFlow<ViewState> = _viewState
@@ -44,8 +45,8 @@ class MangaViewModel @Inject constructor(
 
     private fun fetchData(sortType: SortType) {
         viewModelScope.launch {
-            mediaRepository.getTopManga(sortType = sortType).distinctUntilChanged().cachedIn(viewModelScope).collect { pagingData ->
-                _animeState.update { pagingData }
+            mediaRepository.getTopMedia(type = MediaType.Manga, sortType = sortType).distinctUntilChanged().cachedIn(viewModelScope).collect { pagingData ->
+                _mediaState.update { pagingData }
                 _viewState.update { oldState -> oldState.copy(isLoading = false) }
             }
         }

@@ -1,12 +1,17 @@
 package com.example.animelist.data.mapper
 
-import com.example.GetAnimeBySortTypeQuery
-import com.example.animelist.domain.model.Anime
+import com.example.GetMediaBySortTypeQuery
 import com.example.animelist.domain.model.CoverImage
+import com.example.animelist.domain.model.Media
+import com.example.animelist.domain.repository.MediaType
 
-fun GetAnimeBySortTypeQuery.Medium.toAnime(): Anime {
-    return Anime(
+fun GetMediaBySortTypeQuery.Medium.toMedia(): Media {
+    return Media(
         id = id,
+        type = when (type) {
+            com.example.type.MediaType.MANGA -> MediaType.Manga
+            else -> MediaType.Anime
+        },
         averageScore = averageScore,
         title = title?.toTitle(),
         coverImage = coverImage?.toCoverImage(),
@@ -15,15 +20,15 @@ fun GetAnimeBySortTypeQuery.Medium.toAnime(): Anime {
     )
 }
 
-fun GetAnimeBySortTypeQuery.Title.toTitle(): String? = english ?: userPreferred
+fun GetMediaBySortTypeQuery.Title.toTitle(): String? = english ?: userPreferred
 
-fun GetAnimeBySortTypeQuery.CoverImage.toCoverImage() = CoverImage(
+fun GetMediaBySortTypeQuery.CoverImage.toCoverImage() = CoverImage(
     color = color,
     extraLarge = extraLarge,
     large = large
 )
 
-fun GetAnimeBySortTypeQuery.Studios.toStudios(): List<String> {
+fun GetMediaBySortTypeQuery.Studios.toStudios(): List<String> {
     val studios = mutableListOf<String>()
     nodes?.filterNotNull()?.forEach { node ->
         studios.add(node.name)

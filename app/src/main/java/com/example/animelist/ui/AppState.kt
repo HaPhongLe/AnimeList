@@ -10,7 +10,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.example.animelist.navigation.TopLevelNavDestination
-import com.example.animelist.ui.feature.dashboard.navigation.navigateToDashboard
+import com.example.animelist.ui.feature.dashboard.navigation.navigateToAnime
 import com.example.animelist.ui.feature.interests.navigation.navigateToInterests
 import com.example.animelist.ui.feature.manga.navigation.navigateToMangaScreen
 
@@ -44,7 +44,7 @@ class AppState(
         }
 
         when (topLevelNavDestination) {
-            TopLevelNavDestination.DASH_BOARD -> navController.navigateToDashboard(topLevelNavOptions)
+            TopLevelNavDestination.DASH_BOARD -> navController.navigateToAnime(topLevelNavOptions)
             TopLevelNavDestination.WATCH_LATER -> navController.navigateToMangaScreen(topLevelNavOptions)
             TopLevelNavDestination.INTERESTS -> navController.navigateToInterests(topLevelNavOptions)
         }

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AnimeDetailsViewModel @Inject constructor(
+class MediaDetailsViewModel @Inject constructor(
     private val mediaRepository: MediaRepository
 ) : ViewModel() {
     private var currentAnimeId: Int? = null

@@ -28,13 +28,13 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.animelist.R
 import com.example.animelist.domain.mockModel.mock
-import com.example.animelist.domain.model.Manga
+import com.example.animelist.domain.model.Media
 import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.component.ErrorDialog
 import com.example.animelist.ui.component.FullScreenLoading
+import com.example.animelist.ui.component.PullToRefreshMediaList
 import com.example.animelist.ui.component.SortTypeDropDownMenu
-import com.example.animelist.ui.feature.detail.navigation.navigateToAnimeDetails
-import com.example.animelist.ui.feature.manga.component.PullToRefreshMangaList
+import com.example.animelist.ui.feature.detail.navigation.navigateToMediaDetails
 import com.example.animelist.ui.theme.AppTheme
 import kotlinx.coroutines.flow.flowOf
 
@@ -43,7 +43,7 @@ fun MangaScreen(
     navHostController: NavHostController,
     viewModel: MangaViewModel = hiltViewModel()
 ) {
-    val animeLazyPagingItems = viewModel.animeState.collectAsLazyPagingItems()
+    val animeLazyPagingItems = viewModel.mediaState.collectAsLazyPagingItems()
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     var errorRefreshingDialog by remember {
         mutableStateOf<String?>(null)
@@ -53,7 +53,7 @@ fun MangaScreen(
         viewModel.eventFlow.collect { event ->
             when (event) {
                 is MangaViewModel.Event.RefreshError -> errorRefreshingDialog = event.message
-                is MangaViewModel.Event.NavigateToDetailsScreen -> navHostController.navigateToAnimeDetails(animeId = event.animeId)
+                is MangaViewModel.Event.NavigateToDetailsScreen -> navHostController.navigateToMediaDetails(animeId = event.animeId)
             }
         }
     }
@@ -88,7 +88,7 @@ fun MangaScreen(
 private fun MangaScreen(
     modifier: Modifier = Modifier,
     viewState: MangaViewModel.ViewState,
-    lazyPagingItems: LazyPagingItems<Manga>,
+    lazyPagingItems: LazyPagingItems<Media>,
     onRefresh: () -> Unit,
     onAnimeClick: (Int) -> Unit,
     onSortTypeClick: (SortType) -> Unit
@@ -115,7 +115,7 @@ private fun MangaScreen(
         if (viewState.isLoading) {
             FullScreenLoading()
         } else {
-            PullToRefreshMangaList(
+            PullToRefreshMediaList(
                 isRefreshing = viewState.isRefreshing,
                 isAppending = viewState.isAppendingLoading,
                 appendingError = viewState.appendError,
@@ -130,9 +130,9 @@ private fun MangaScreen(
 @Preview(showBackground = true)
 @Composable
 private fun MangaScreen_Success_Preview() {
-    val mockData = mutableListOf<Manga>()
+    val mockData = mutableListOf<Media>()
     (1..10).forEach { _ ->
-        mockData.add(Manga.mock())
+        mockData.add(Media.mock())
     }
     val lazyPagingItems = flowOf(PagingData.from(mockData)).collectAsLazyPagingItems()
 
@@ -148,7 +148,7 @@ private fun MangaScreen_Success_Preview() {
 @Preview(showBackground = true)
 @Composable
 private fun DashboardScreen_Error_Preview() {
-    val lazyPagingItems = flowOf(PagingData.from(emptyList<Manga>())).collectAsLazyPagingItems()
+    val lazyPagingItems = flowOf(PagingData.from(emptyList<Media>())).collectAsLazyPagingItems()
     MangaScreen(
         viewState = MangaViewModel.ViewState(isLoading = false, appendError = "Error load data"),
         lazyPagingItems = lazyPagingItems,

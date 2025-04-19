@@ -8,8 +8,9 @@ import androidx.paging.map
 import app.cash.turbine.test
 import com.example.animelist.MainDispatcherRule
 import com.example.animelist.domain.mockModel.mock
-import com.example.animelist.domain.model.Anime
+import com.example.animelist.domain.model.Media
 import com.example.animelist.domain.repository.MediaRepository
+import com.example.animelist.domain.repository.MediaType
 import com.example.animelist.domain.repository.SortType
 import com.example.animelist.ui.util.ResourceProvider
 import io.mockk.every
@@ -26,11 +27,11 @@ import org.junit.Rule
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DashboardViewModelTest {
+class AnimeViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val mockAnimeList = (1..10).map { Anime.mock(id = it) }
+    private val mockMediaList = (1..10).map { Media.mock(id = it) }
     private val mockLoadStateSource = LoadStates(
         refresh = LoadState.Loading,
         prepend = LoadState.NotLoading(endOfPaginationReached = false),
@@ -44,23 +45,23 @@ class DashboardViewModelTest {
     )
     private fun createSut(
         mediaRepository: MediaRepository = mockk {
-            every { this@mockk.getTopAnime(sortType = any()) } returns flowOf(PagingData.from(mockAnimeList))
+            every { this@mockk.getTopMedia(type = MediaType.Anime, sortType = any()) } returns flowOf(PagingData.from(mockMediaList))
         },
         resourceProvider: ResourceProvider = mockk {
             every { stringForRes(any()) } returns "Error"
         }
-    ) = DashboardViewModel(mediaRepository = mediaRepository, resourceProvider = resourceProvider)
+    ) = AnimeViewModel(mediaRepository = mediaRepository, resourceProvider = resourceProvider)
 
     @Test
     fun `init viewmodel should update animeList and viewState`() = runTest {
         val sut = createSut()
         advanceUntilIdle()
-        val returnedAnimeList = mutableListOf<Anime>()
-        sut.animeState.value.map { anime ->
-            returnedAnimeList.add(anime)
+        val returnedMediaList = mutableListOf<Media>()
+        sut.mediaState.value.map { anime ->
+            returnedMediaList.add(anime)
         }
-        returnedAnimeList.mapIndexed { index: Int, anime: Anime ->
-            assertEquals(mockAnimeList[index], anime)
+        returnedMediaList.mapIndexed { index: Int, media: Media ->
+            assertEquals(mockMediaList[index], media)
         }
         assertFalse(sut.viewState.value.isLoading)
     }
@@ -132,19 +133,19 @@ class DashboardViewModelTest {
                 )
             )
             advanceUntilIdle()
-            assertEquals(awaitItem(), DashboardViewModel.Event.RefreshError("Appending Error!"))
+            assertEquals(awaitItem(), AnimeViewModel.Event.RefreshError("Appending Error!"))
         }
     }
 
     @Test
     fun `onSortTypeClick should update viewState sort type and call getTopAnime by AnimeRepository`() = runTest {
         val mockMediaRepository: MediaRepository = mockk {
-            every { this@mockk.getTopAnime(sortType = any()) } returns flowOf(androidx.paging.PagingData.from(mockAnimeList))
+            every { this@mockk.getTopMedia(type = MediaType.Anime, sortType = any()) } returns flowOf(androidx.paging.PagingData.from(mockMediaList))
         }
         val sut = createSut(mediaRepository = mockMediaRepository)
         sut.onSortTypeClick(sortType = SortType.Popular)
-        assertEquals(DashboardViewModel.ViewState(selectedSortType = SortType.Popular), sut.viewState.value)
+        assertEquals(AnimeViewModel.ViewState(selectedSortType = SortType.Popular), sut.viewState.value)
         advanceUntilIdle()
-        verify { mockMediaRepository.getTopAnime(sortType = SortType.Popular) }
+        verify { mockMediaRepository.getTopMedia(type = MediaType.Anime, sortType = SortType.Popular) }
     }
 }

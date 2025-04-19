@@ -1,4 +1,4 @@
-query GetAnimeBySortType($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: MediaType!) {
+query GetMediaBySortType($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: MediaType!) {
     Page(page: $page, perPage: $perPage) {
         media(sort: $sort, type: $type) {
             title {
@@ -18,29 +18,10 @@ query GetAnimeBySortType($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type
             id
             genres
             averageScore
+            type
         }
     }
 }
-
-query GetMangaBySortType($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type: MediaType!) {
-    Page(page: $page, perPage: $perPage) {
-        media(sort: $sort, type: $type) {
-            title {
-                english
-                userPreferred
-            }
-            coverImage {
-                color
-                large
-                extraLarge
-            }
-            id
-            genres
-            averageScore
-        }
-    }
-}
-
 
 query MediaById($mediaId: Int) {
     Media(id: $mediaId) {

@@ -1,8 +1,8 @@
 package com.example.animelist.di
 
 import com.apollographql.apollo3.ApolloClient
-import com.example.animelist.data.api.AnimeApi
-import com.example.animelist.data.api.ApolloAnimeApi
+import com.example.animelist.data.api.ApolloMediaApi
+import com.example.animelist.data.api.MediaApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,5 +22,5 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideAnimeClient(apolloClient: ApolloClient): AnimeApi = ApolloAnimeApi(apolloClient)
+    fun provideAnimeClient(apolloClient: ApolloClient): MediaApi = ApolloMediaApi(apolloClient)
 }

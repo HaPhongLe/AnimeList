@@ -47,9 +47,9 @@ import com.example.animelist.ui.theme.AnimeListTheme
 import com.example.animelist.ui.theme.AppTheme
 
 @Composable
-fun AnimeDetailsScreen(
+fun MediaDetailsScreen(
     animeId: Int,
-    viewModel: AnimeDetailsViewModel = hiltViewModel()
+    viewModel: MediaDetailsViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
@@ -58,14 +58,14 @@ fun AnimeDetailsScreen(
     }
 
     when (viewState) {
-        AnimeDetailsViewModel.ViewState.Loading -> FullScreenLoading()
-        is AnimeDetailsViewModel.ViewState.Success -> AnimeDetailsSuccessScreen(mediaDetails = (viewState as AnimeDetailsViewModel.ViewState.Success).mediaDetails)
-        is AnimeDetailsViewModel.ViewState.Error -> AnimeDetailsErrorScreen((viewState as AnimeDetailsViewModel.ViewState.Error).message)
+        MediaDetailsViewModel.ViewState.Loading -> FullScreenLoading()
+        is MediaDetailsViewModel.ViewState.Success -> MediaDetailsSuccessScreen(mediaDetails = (viewState as MediaDetailsViewModel.ViewState.Success).mediaDetails)
+        is MediaDetailsViewModel.ViewState.Error -> MediaDetailsErrorScreen((viewState as MediaDetailsViewModel.ViewState.Error).message)
     }
 }
 
 @Composable
-private fun AnimeDetailsSuccessScreen(
+private fun MediaDetailsSuccessScreen(
     mediaDetails: MediaDetails,
     modifier: Modifier = Modifier
 ) {
@@ -156,7 +156,7 @@ private fun ExpandableTextView(
 }
 
 @Composable
-private fun AnimeDetailsErrorScreen(
+private fun MediaDetailsErrorScreen(
     errorMessage: String,
     modifier: Modifier = Modifier
 ) {
@@ -170,16 +170,16 @@ private fun AnimeDetailsErrorScreen(
 
 @Preview
 @Composable
-private fun AnimeDetailsSuccessScreen_Preview() {
+private fun MediaDetailsSuccessScreen_Preview() {
     AnimeListTheme {
-        AnimeDetailsSuccessScreen(mediaDetails = MediaDetails.mock())
+        MediaDetailsSuccessScreen(mediaDetails = MediaDetails.mock())
     }
 }
 
 @Preview
 @Composable
-private fun AnimeDetailsErrorScreen_Preview() {
+private fun MediaDetailsErrorScreen_Preview() {
     AnimeListTheme {
-        AnimeDetailsErrorScreen(errorMessage = "Error loading the anime details")
+        MediaDetailsErrorScreen(errorMessage = "Error loading the anime details")
     }
 }
