@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.apollo)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.ksp)
     kotlin("kapt")
 }
 
@@ -71,6 +72,12 @@ dependencies {
     implementation(libs.hilt.compose)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.gson)
+
+    // room
+    implementation(libs.room)
+    ksp(libs.room.compiler)
+
     // unit test
     testImplementation(libs.junit)
     testImplementation(libs.mockk)

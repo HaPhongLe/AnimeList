@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.example.animelist.ui.AppState
 import com.example.animelist.ui.feature.dashboard.navigation.AnimeGraph
 import com.example.animelist.ui.feature.dashboard.navigation.animeGraph
-import com.example.animelist.ui.feature.interests.navigation.favouriteScreen
+import com.example.animelist.ui.feature.favorite.navigation.favouriteScreen
 import com.example.animelist.ui.feature.manga.navigation.mangaScreen
 
 @Composable

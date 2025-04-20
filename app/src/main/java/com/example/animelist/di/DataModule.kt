@@ -1,11 +1,15 @@
 package com.example.animelist.di
 
+import android.content.Context
+import androidx.room.Room
 import com.apollographql.apollo3.ApolloClient
 import com.example.animelist.data.api.ApolloMediaApi
 import com.example.animelist.data.api.MediaApi
+import com.example.animelist.data.local.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -22,5 +26,16 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideAnimeClient(apolloClient: ApolloClient): MediaApi = ApolloMediaApi(apolloClient)
+    fun provideMediaClient(apolloClient: ApolloClient): MediaApi = ApolloMediaApi(apolloClient)
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
+        Room.databaseBuilder<AppDatabase>(
+            context = context,
+            name = "app_database"
+        ).build()
+
+    @Provides
+    fun provideMediaDao(appDatabase: AppDatabase) = appDatabase.mediaDao()
 }

@@ -1,4 +1,4 @@
-package com.example.animelist.ui.feature.interests
+package com.example.animelist.ui.feature.favorite
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun InterestsScreen() {
+fun FavoriteScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Text(modifier = Modifier.align(Alignment.Center), text = "Interests")
     }

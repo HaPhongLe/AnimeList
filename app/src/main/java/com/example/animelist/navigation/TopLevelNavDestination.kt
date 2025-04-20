@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.animelist.R
 import com.example.animelist.ui.feature.dashboard.navigation.AnimeGraph
-import com.example.animelist.ui.feature.interests.navigation.InterestsScreen
+import com.example.animelist.ui.feature.favorite.navigation.FavoriteScreen
 import com.example.animelist.ui.feature.manga.navigation.MangaScreenRoute
 import kotlin.reflect.KClass
 
@@ -27,6 +27,6 @@ enum class TopLevelNavDestination(
     INTERESTS(
         icon = R.drawable.ic_star,
         title = R.string.top_nav_interests,
-        route = InterestsScreen::class
+        route = FavoriteScreen::class
     )
 }

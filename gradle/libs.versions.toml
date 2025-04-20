@@ -2,23 +2,26 @@
 agp = "8.7.3"
 coilCompose = "3.0.4"
 kotlin = "2.0.20"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
-composeBom = "2024.11.00"
-composeNavigation = "2.8.4"
+activityCompose = "1.10.1"
+composeBom = "2025.04.00"
+composeNavigation = "2.8.9"
 kotlixSerialization = "1.7.3"
 apollo = "3.7.3"
+gson = "2.13.0"
 hilt = "2.52"
 hilt-compose = "1.2.0"
 ktlint = "11.5.1"
+ksp = "2.0.21-1.0.27"
 mockk = "1.13.2"
 paging_version = "3.3.6"
-paging_test = "3.2.1"
+paging_test = "3.3.6"
 coroutine-test = "1.7.3"
+room = "2.7.0"
 turbine = "1.2.0"
 
 [libraries]
@@ -42,13 +45,16 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-kotlinx-coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-test"}
-kotlinx-serialization-json = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlixSerialization"}
+gson = {module = "com.google.code.gson:gson", version.ref = "gson"}
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compose" }
 hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-compose" }
+kotlinx-coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-test"}
+kotlinx-serialization-json = {group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlixSerialization"}
 mockk = { module = "io.mockk:mockk", version.ref = "mockk"}
+room = {group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room_compiler = {group = "androidx.room", name = "room-compiler", version.ref = "room" }
 turbine = {module = "app.cash.turbine:turbine", version.ref = "turbine"}
 
 #apollo
@@ -63,6 +69,7 @@ kotlin-serialization ={id = "org.jetbrains.kotlin.plugin.serialization", version
 apollo ={id = "com.apollographql.apollo3", version.ref = "apollo"}
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+ksp = {id  = "com.google.devtools.ksp", version.ref = "ksp"}
 
 
 
