@@ -2,6 +2,8 @@ package com.example.animelist.ui.theme
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF435E91)
@@ -240,3 +242,13 @@ val LightColorScheme = lightColorScheme(
     onSurface = onSurfaceLight,
     surfaceContainer = surfaceContainerLight
 )
+
+@Immutable
+data class ExtendedColors(
+    val bookmark: Color = Color(0xFFFCBA03),
+    val bookmarkOff: Color = Color(0xFF727d9c)
+)
+
+val LocalExtendedColors = staticCompositionLocalOf {
+    ExtendedColors()
+}

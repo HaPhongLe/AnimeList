@@ -3,21 +3,24 @@ package com.example.animelist.data.repository
 import androidx.paging.testing.asSnapshot
 import com.example.animelist.MainDispatcherRule
 import com.example.animelist.data.api.MediaApi
+import com.example.animelist.data.local.media.MediaDao
 import com.example.animelist.domain.mockModel.mock
 import com.example.animelist.domain.model.Media
 import com.example.animelist.domain.model.MediaDetails
 import com.example.animelist.domain.repository.MediaType
 import com.example.animelist.domain.repository.SortType
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
-class MediaEntityRepositoryImplTest {
+class MediaRepositoryImplTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
@@ -31,8 +34,11 @@ class MediaEntityRepositoryImplTest {
             coEvery { getTopMedia(2, type = MediaType.Anime, sortType = SortType.Trending) } returns secondSetOfMedia
             coEvery { getTopMedia(3, type = MediaType.Anime, sortType = SortType.Trending) } returns thirdSetOfMedia
             coEvery { getMediaDetailsById(any()) } returns MediaDetails.mock()
+        },
+        mediaDao: MediaDao = mockk {
+            every { countMediaEntityById(1) } returns flowOf(0)
         }
-    ) = MediaRepositoryImpl(mediaApi)
+    ) = MediaRepositoryImpl(mediaApi, mediaDao)
 
     @Test
     fun `getTrendingAnime should correctly return list of anime`() = runTest {
@@ -56,7 +62,7 @@ class MediaEntityRepositoryImplTest {
     @Test
     fun `getAnimeDetailsById should correctly return animeDetails`() = runTest {
         val repo = createSut()
-        val result = repo.getMediaById(1)
+        val result = repo.getMediaDetailsById(1)
         advanceUntilIdle()
         assertEquals(MediaDetails.Companion.mock(), result)
     }

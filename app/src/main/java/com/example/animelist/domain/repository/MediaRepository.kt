@@ -7,7 +7,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface MediaRepository {
     fun getTopMedia(type: MediaType, sortType: SortType): Flow<PagingData<Media>>
-    suspend fun getMediaById(id: Int): MediaDetails?
+    suspend fun getMediaDetailsById(id: Int): MediaDetails?
+    suspend fun saveMediaId(id: Int)
+    suspend fun deleteSavedMediaId(id: Int)
+    fun getNumberOfSavedMediaByIdFlow(id: Int): Flow<Int>
+    fun getSavedMediaIds(): Flow<List<Int>>
 }
 
 enum class SortType {

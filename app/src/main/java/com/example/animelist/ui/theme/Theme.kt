@@ -13,6 +13,9 @@ object AppTheme {
     val dimension: AppDimension
         @Composable
         get() = LocalAppDimensions.current
+    val colors: ExtendedColors
+        @Composable
+        get() = LocalExtendedColors.current
 }
 
 @Composable
@@ -33,6 +36,7 @@ fun AnimeListTheme(
     }
 
     val dimension = AppDimension()
+    val extendedColors = ExtendedColors()
 
     MaterialTheme(
         colorScheme = colorScheme,
@@ -40,6 +44,7 @@ fun AnimeListTheme(
         content = {
             CompositionLocalProvider(
                 LocalAppDimensions provides dimension,
+                LocalExtendedColors provides extendedColors,
                 content = content
             )
         }

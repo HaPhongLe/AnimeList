@@ -13,14 +13,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,64 +50,90 @@ import com.example.animelist.ui.theme.AppTheme
 
 @Composable
 fun MediaDetailsScreen(
-    animeId: Int,
     viewModel: MediaDetailsViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(animeId) {
-        viewModel.onResume(animeId)
-    }
-
     when (viewState) {
         MediaDetailsViewModel.ViewState.Loading -> FullScreenLoading()
-        is MediaDetailsViewModel.ViewState.Success -> MediaDetailsSuccessScreen(mediaDetails = (viewState as MediaDetailsViewModel.ViewState.Success).mediaDetails)
+        is MediaDetailsViewModel.ViewState.Success -> MediaDetailsSuccessScreen(
+            viewState = (viewState as MediaDetailsViewModel.ViewState.Success),
+            onBookmarkClick = { viewModel.onBookmarkClick() }
+        )
         is MediaDetailsViewModel.ViewState.Error -> MediaDetailsErrorScreen((viewState as MediaDetailsViewModel.ViewState.Error).message)
     }
 }
 
 @Composable
 private fun MediaDetailsSuccessScreen(
-    mediaDetails: MediaDetails,
-    modifier: Modifier = Modifier
+    viewState: MediaDetailsViewModel.ViewState.Success,
+    modifier: Modifier = Modifier,
+    onBookmarkClick: () -> Unit
 ) {
     val scrollState = rememberScrollState()
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-    ) {
-        FadedImage(imageUrl = mediaDetails.bannerImage)
-
+    Box {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.Black)
-                .padding(vertical = AppTheme.dimension.spaceL, horizontal = AppTheme.dimension.spaceS),
-            verticalArrangement = Arrangement.spacedBy(AppTheme.dimension.spaceM),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
         ) {
-            mediaDetails.title?.let {
-                Text(
-                    text = it,
-                    fontSize = 24.sp,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+            FadedImage(imageUrl = viewState.mediaDetails.bannerImage)
 
-            BasicInfo(mediaDetails = mediaDetails)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.Black)
+                    .padding(vertical = AppTheme.dimension.spaceL, horizontal = AppTheme.dimension.spaceS),
+                verticalArrangement = Arrangement.spacedBy(AppTheme.dimension.spaceM),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                viewState.mediaDetails.title?.let {
+                    Text(
+                        text = it,
+                        fontSize = 24.sp,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
 
-            mediaDetails.description?.let {
-                ExpandableTextView(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = AppTheme.dimension.spaceM),
-                    text = it,
-                    textLengthToCutOff = 400
-                )
+                BasicInfo(mediaDetails = viewState.mediaDetails)
+
+                viewState.mediaDetails.description?.let {
+                    ExpandableTextView(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = AppTheme.dimension.spaceM),
+                        text = it,
+                        textLengthToCutOff = 400
+                    )
+                }
+                StreamingEpisodes(streamingEpisode = viewState.mediaDetails.streamingEpisodes)
             }
-            StreamingEpisodes(streamingEpisode = mediaDetails.streamingEpisodes)
         }
+        BookMarkButton(
+            modifier = Modifier.align(Alignment.TopEnd),
+            isBookmarked = viewState.isBookmarked,
+            onClick = onBookmarkClick
+        )
+    }
+}
+
+@Composable
+private fun BookMarkButton(
+    modifier: Modifier = Modifier,
+    isBookmarked: Boolean,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = modifier.padding(AppTheme.dimension.spaceL)
+    ) {
+        Icon(
+            modifier = Modifier
+                .size(48.dp)
+                .clickable { onClick.invoke() },
+            painter = painterResource(R.drawable.ic_star),
+            tint = if (isBookmarked) AppTheme.colors.bookmark else AppTheme.colors.bookmarkOff,
+            contentDescription = null
+        )
     }
 }
 
@@ -172,7 +200,10 @@ private fun MediaDetailsErrorScreen(
 @Composable
 private fun MediaDetailsSuccessScreen_Preview() {
     AnimeListTheme {
-        MediaDetailsSuccessScreen(mediaDetails = MediaDetails.mock())
+        MediaDetailsSuccessScreen(
+            viewState = MediaDetailsViewModel.ViewState.Success(MediaDetails.mock(), isBookmarked = true),
+            onBookmarkClick = {}
+        )
     }
 }
 

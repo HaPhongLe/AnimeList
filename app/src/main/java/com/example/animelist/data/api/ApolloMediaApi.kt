@@ -4,6 +4,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
 import com.example.GetMediaBySortTypeQuery
 import com.example.MediaByIdQuery
+import com.example.MediaDetailsByIdQuery
 import com.example.animelist.data.mapper.toAnimeDetails
 import com.example.animelist.data.mapper.toMedia
 import com.example.animelist.domain.model.Media
@@ -38,10 +39,21 @@ class ApolloMediaApi(
     override suspend fun getMediaDetailsById(id: Int): MediaDetails? =
         try {
             apolloClient
-                .query(query = MediaByIdQuery(mediaId = Optional.present(id)))
+                .query(query = MediaDetailsByIdQuery(mediaId = Optional.present(id)))
                 .execute()
                 .data
                 ?.Media?.toAnimeDetails()
+        } catch (e: Exception) {
+            throw e
+        }
+
+    override suspend fun getMediaById(id: Int): Media? =
+        try {
+            apolloClient
+                .query(query = MediaByIdQuery(mediaId = Optional.present(id)))
+                .execute()
+                .data
+                ?.Media?.toMedia()
         } catch (e: Exception) {
             throw e
         }

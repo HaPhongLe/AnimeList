@@ -7,6 +7,7 @@ import com.example.animelist.domain.model.MediaDetails
 import com.example.animelist.domain.model.StreamingEpisode
 
 fun MediaDetails.Companion.mock(
+    id: Int = 1,
     bannerImage: String? = "https://s4.anilist.co/file/anilistcdn/media/anime/banner/1-OquNCNB6srGe.jpg",
     title: String? = "Cowboy Bebop",
     genres: List<String>? = listOf(
@@ -23,6 +24,7 @@ fun MediaDetails.Companion.mock(
     status: String? = "FINISHED",
     episodes: Int? = 13
 ) = MediaDetails(
+    id = id,
     bannerImage = bannerImage,
     title = title,
     genres = genres,

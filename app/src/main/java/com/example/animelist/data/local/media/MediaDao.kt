@@ -11,9 +11,12 @@ interface MediaDao {
     @Query("SELECT * FROM media")
     fun getAll(): Flow<List<MediaEntity>>
 
+    @Query("SELECT COUNT(*) FROM media WHERE id = :id")
+    fun countMediaEntityById(id: Int): Flow<Int>
+
     @Insert
-    fun insert(mediaEntity: MediaEntity)
+    suspend fun insert(mediaEntity: MediaEntity)
 
     @Delete
-    fun delete(mediaEntity: MediaEntity)
+    suspend fun delete(mediaEntity: MediaEntity)
 }

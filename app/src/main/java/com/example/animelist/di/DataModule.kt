@@ -6,6 +6,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.example.animelist.data.api.ApolloMediaApi
 import com.example.animelist.data.api.MediaApi
 import com.example.animelist.data.local.AppDatabase
+import com.example.animelist.data.local.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,8 +34,10 @@ object DataModule {
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder<AppDatabase>(
             context = context,
-            name = "app_database"
-        ).build()
+            name = AppDatabase.TABLE_NAME
+        )
+            .addMigrations(MIGRATION_1_2)
+            .build()
 
     @Provides
     fun provideMediaDao(appDatabase: AppDatabase) = appDatabase.mediaDao()

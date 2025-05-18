@@ -23,8 +23,9 @@ query GetMediaBySortType($page: Int!, $perPage: Int!, $sort: [MediaSort]!, $type
     }
 }
 
-query MediaById($mediaId: Int) {
+query MediaDetailsById($mediaId: Int) {
     Media(id: $mediaId) {
+        id
         bannerImage
         title {
             english
@@ -59,5 +60,28 @@ query MediaById($mediaId: Int) {
             thumbnail
         }
         episodes
+    }
+}
+
+query MediaById($mediaId: Int) {
+    Media(id: $mediaId) {
+        title {
+            english
+            userPreferred
+        }
+        coverImage {
+            color
+            large
+            extraLarge
+        }
+        studios {
+            nodes {
+                name
+            }
+        }
+        id
+        genres
+        averageScore
+        type
     }
 }

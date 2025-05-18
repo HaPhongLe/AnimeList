@@ -1,5 +1,6 @@
 package com.example.animelist.ui.feature.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.animelist.domain.model.MediaDetails
@@ -13,19 +14,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MediaDetailsViewModel @Inject constructor(
-    private val mediaRepository: MediaRepository
+    private val mediaRepository: MediaRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private var currentAnimeId: Int? = null
     private val _viewState: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
     val viewState: StateFlow<ViewState> = _viewState
-
-    fun onResume(animeId: Int) {
-        if (animeId != currentAnimeId) {
-            viewModelScope.launch {
+    private val animeId: Int = requireNotNull(savedStateHandle["id"])
+    init {
+        viewModelScope.launch {
+            mediaRepository.getNumberOfSavedMediaByIdFlow(animeId).collect { numberOfSavedMediaById ->
                 try {
-                    val animeDetails = mediaRepository.getMediaById(animeId)
+                    val animeDetails = mediaRepository.getMediaDetailsById(animeId)
+                    val isBookmarked = numberOfSavedMediaById > 0
                     animeDetails?.let { details ->
-                        _viewState.update { ViewState.Success(details) }
+                        _viewState.update { ViewState.Success(details, isBookmarked) }
                         currentAnimeId = animeId
                     }
                 } catch (e: Exception) {
@@ -35,9 +38,21 @@ class MediaDetailsViewModel @Inject constructor(
         }
     }
 
+    fun onBookmarkClick() {
+        viewModelScope.launch {
+            if (viewState.value is ViewState.Success) {
+                if ((viewState.value as ViewState.Success).isBookmarked) {
+                    mediaRepository.deleteSavedMediaId((viewState.value as ViewState.Success).mediaDetails.id)
+                } else {
+                    mediaRepository.saveMediaId(animeId)
+                }
+            }
+        }
+    }
+
     sealed interface ViewState {
         data object Loading : ViewState
         data class Error(val message: String) : ViewState
-        data class Success(val mediaDetails: MediaDetails) : ViewState
+        data class Success(val mediaDetails: MediaDetails, val isBookmarked: Boolean) : ViewState
     }
 }
