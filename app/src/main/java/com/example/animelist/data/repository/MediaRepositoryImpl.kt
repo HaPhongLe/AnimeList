@@ -26,6 +26,8 @@ class MediaRepositoryImpl @Inject constructor(private val mediaApi: MediaApi, pr
     override suspend fun getMediaDetailsById(id: Int): MediaDetails? =
         mediaApi.getMediaDetailsById(id)
 
+    override suspend fun getMediaById(id: Int): Media? = mediaApi.getMediaById(id)
+
     override suspend fun saveMediaId(id: Int) {
         mediaDao.insert(MediaEntity(id = id))
     }

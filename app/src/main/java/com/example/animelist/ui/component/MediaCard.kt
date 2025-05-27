@@ -43,7 +43,7 @@ import com.example.animelist.ui.util.hexToComposeColor
 @Composable
 fun MediaCard(
     media: Media,
-    ranking: Int,
+    ranking: Int? = null,
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit
 ) {
@@ -90,7 +90,7 @@ fun MediaCard(
 @Composable
 private fun AnimeAvatar(
     modifier: Modifier = Modifier,
-    ranking: Int,
+    ranking: Int? = null,
     imageUrl: String?
 ) {
     Box(
@@ -123,12 +123,14 @@ private fun AnimeAvatar(
                 }
                 .padding(AppTheme.dimension.spaceXS)
         ) {
-            Text(
-                text = ranking.toString(),
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
+            ranking?.let {
+                Text(
+                    text = it.toString(),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }
