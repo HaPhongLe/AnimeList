@@ -78,7 +78,7 @@ fun MangaScreen(
         viewState = viewState,
         lazyPagingItems = animeLazyPagingItems,
         onRefresh = { viewModel.onRefresh.invoke() },
-        onAnimeClick = viewModel::onAnimeClick,
+        onMangaClick = viewModel::onMangaClick,
         onSortTypeClick = viewModel::onSortTypeClick
     )
 }
@@ -90,7 +90,7 @@ private fun MangaScreen(
     viewState: MangaViewModel.ViewState,
     lazyPagingItems: LazyPagingItems<Media>,
     onRefresh: () -> Unit,
-    onAnimeClick: (Int) -> Unit,
+    onMangaClick: (Int) -> Unit,
     onSortTypeClick: (SortType) -> Unit
 ) {
     Column(
@@ -121,7 +121,7 @@ private fun MangaScreen(
                 appendingError = viewState.appendError,
                 onRefresh = onRefresh,
                 lazyPagingItems = lazyPagingItems,
-                onAnimeClick = onAnimeClick
+                onAnimeClick = onMangaClick
             )
         }
     }
@@ -140,7 +140,7 @@ private fun MangaScreen_Success_Preview() {
         viewState = MangaViewModel.ViewState(isLoading = false),
         lazyPagingItems = lazyPagingItems,
         onRefresh = {},
-        onAnimeClick = {},
+        onMangaClick = {},
         onSortTypeClick = {}
     )
 }
@@ -153,7 +153,7 @@ private fun DashboardScreen_Error_Preview() {
         viewState = MangaViewModel.ViewState(isLoading = false, appendError = "Error load data"),
         lazyPagingItems = lazyPagingItems,
         onRefresh = {},
-        onAnimeClick = {},
+        onMangaClick = {},
         onSortTypeClick = {}
     )
 }

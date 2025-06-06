@@ -79,7 +79,7 @@ class MangaViewModel @Inject constructor(
         }
     }
 
-    fun onAnimeClick(id: Int) {
+    fun onMangaClick(id: Int) {
         emitEvent(Event.NavigateToDetailsScreen(id))
     }
 

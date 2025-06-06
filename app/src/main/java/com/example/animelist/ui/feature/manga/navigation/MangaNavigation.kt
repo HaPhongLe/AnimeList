@@ -17,9 +17,9 @@ object MangaGraph : Route.Graph
 @Serializable
 object MangaScreenRoute : Route.Screen
 
-fun NavHostController.navigateToMangaScreen(navOptions: NavOptions) = navigate(route = MangaScreenRoute, navOptions = navOptions)
+fun NavHostController.navigateToManga(navOptions: NavOptions) = navigate(route = MangaGraph, navOptions = navOptions)
 
-fun NavGraphBuilder.mangaScreen(navHostController: NavHostController) {
+fun NavGraphBuilder.mangaGraph(navHostController: NavHostController) {
     navigation<MangaGraph>(startDestination = MangaScreenRoute) {
         composable<MangaScreenRoute> { MangaScreen(navHostController) }
         composable<MediaDetailsScreenRoute> { backStackEntry ->

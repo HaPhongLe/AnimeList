@@ -77,6 +77,7 @@ private fun MediaDetailsSuccessScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .background(color = Color.Black)
                 .verticalScroll(scrollState)
         ) {
             FadedImage(imageUrl = viewState.mediaDetails.bannerImage)
@@ -84,7 +85,6 @@ private fun MediaDetailsSuccessScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color.Black)
                     .padding(vertical = AppTheme.dimension.spaceL, horizontal = AppTheme.dimension.spaceS),
                 verticalArrangement = Arrangement.spacedBy(AppTheme.dimension.spaceM),
                 horizontalAlignment = Alignment.CenterHorizontally

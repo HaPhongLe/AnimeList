@@ -17,4 +17,6 @@
 
     <string name="trending">Trending</string>
     <string name="popular">Popular</string>
+
+    <string name="favourite">Favourite</string>
 </resources>
